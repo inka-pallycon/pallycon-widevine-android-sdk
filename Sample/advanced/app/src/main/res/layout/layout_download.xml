@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingRight="30dp"
+              android:paddingLeft="30dp">
+
+    <!-- content name -->
+    <TextView
+        android:id="@+id/download_content_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="sample.mp4"/>
+
+    <!-- download Progress -->
+    <ProgressBar
+        android:id="@+id/download_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- download size -->
+        <TextView
+            android:id="@+id/download_left"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dip"
+            android:layout_marginTop="2dip"
+            android:gravity="center_vertical|left"
+            android:textSize="10dp" />
+
+        <!-- download percent -->
+        <TextView
+            android:id="@+id/download_right"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dip"
+            android:layout_marginTop="2dip"
+            android:gravity="right"
+            android:textSize="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

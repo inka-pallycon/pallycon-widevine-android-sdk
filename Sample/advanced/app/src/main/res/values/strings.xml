@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">WideVine Sample</string>
+    <string name="track_selection_title">Select tracks</string>
+    <string name="retry">Retry</string>
+    <string name="storage_permission_denied">Permission to access storage was denied</string>
+
+    <string name="error_drm_not_supported">Protected content not supported on API levels below 18</string>
+
+    <string name="error_drm_unsupported_scheme">This device does not support the required DRM scheme</string>
+
+    <string name="error_generic">Playback failed</string>
+    <string name="error_drm_unknown">An unknown DRM error occurred</string>
+    <string name="error_no_decoder">This device does not provide a decoder for %1$s</string>
+
+    <string name="error_no_secure_decoder">This device does not provide a secure decoder for %1$s</string>
+
+    <string name="error_querying_decoders">Unable to query device decoders</string>
+
+    <string name="error_instantiating_decoder">Unable to instantiate decoder %1$s</string>
+
+    <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
+
+    <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
+
+    <string name="app_id">1CDBBCB6</string>
+    <string name="media_route_menu_title">Cast</string>
+
+	<string name="selection_disabled">Disabled</string>
+
+    <string name="selection_default">Default</string>
+
+    <string name="enable_random_adaptation">Enable random adaptation</string>
+
+</resources>
