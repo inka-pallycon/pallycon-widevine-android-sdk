@@ -1,0 +1,1 @@
+sourceset_dependencies='{":widevine:dokkaHtml/androidTestRelease":[],":widevine:dokkaHtml/debug":[],":widevine:dokkaHtml/main":[],":widevine:dokkaHtml/release":[],":widevine:dokkaHtml/testFixtures":[],":widevine:dokkaHtml/testFixturesDebug":[],":widevine:dokkaHtml/testFixturesRelease":[]}'
