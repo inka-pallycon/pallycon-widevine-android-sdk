@@ -1,3 +1,8 @@
+# Version 3.4.5
+
+>- PallyConSDK has been updated to version 3.4.5.
+   >  - Added a PallyConLicenseCipherException.
+
 # Version 3.4.3
 
 >- PallyConSDK has been updated to version 3.4.3.
