@@ -1,3 +1,8 @@
+# Version 3.4.6
+
+>- PallyConSDK has been updated to version 3.4.6.
+   >  - Fixed an issue where the license key rotation feature for live content was not working correctly.
+   
 # Version 3.4.5
 
 >- PallyConSDK has been updated to version 3.4.5.
