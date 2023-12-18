@@ -24,4 +24,3 @@
 -keep class com.pallycon.** {*;}
 -keep class com.google.android.exoplayer2.** {*;}
 -keep class net.sqlcipher.** {*; }
--keep class com.whitecryption.skb.** {*;}
