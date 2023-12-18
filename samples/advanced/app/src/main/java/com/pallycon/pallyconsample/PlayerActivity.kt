@@ -5,24 +5,23 @@ import android.os.Bundle
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.util.Util
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.Util
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.ui.PlayerView
 import com.pallycon.pallyconsample.databinding.ActivityPlayerBinding
 import com.pallycon.widevine.exception.PallyConException
-import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.ContentData
 import com.pallycon.widevine.model.DownloadState
-import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.sdk.PallyConWvSDK
 
 
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerBinding
-    private var playerView: StyledPlayerView? = null
+    private var playerView: PlayerView? = null
     private var exoPlayer: ExoPlayer? = null
     private var wvSDK: PallyConWvSDK? = null
 //    private var content: ContentData? = null
@@ -39,7 +38,6 @@ class PlayerActivity : AppCompatActivity() {
 
         // TODO : Set Sercurity API to protect media recording by screen recorder
         val view = binding.exoplayerView.videoSurfaceView as SurfaceView
-//        val view = binding.surfaceView
         playerView = binding.exoplayerView
         if (Build.VERSION.SDK_INT >= 17) {
             view.setSecure(true)

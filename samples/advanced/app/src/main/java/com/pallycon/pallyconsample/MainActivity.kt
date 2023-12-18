@@ -6,24 +6,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.media3.common.util.Util
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.android.exoplayer2.util.Util
 import com.pallycon.pallyconsample.databinding.ActivityMainBinding
 import com.pallycon.pallyconsample.dialog.TrackSelectDialog
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
-import com.pallycon.widevine.model.PallyConDrmConfigration
 import com.pallycon.widevine.model.PallyConEventListener
-import com.pallycon.widevine.sdk.PallyConWvSDK
 import kotlinx.coroutines.*
-import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
-import com.pallycon.widevine.model.ContentData as PallyConData
 
 
 class MainActivity : AppCompatActivity() {
@@ -81,7 +77,6 @@ class MainActivity : AppCompatActivity() {
             val data = contents.contents.find { it.content.url == currentUrl }
             data?.let {
                 val index = contents.contents.indexOf(it)
-                prepareForIndex(index)
                 contents.contents[index].subTitle = "Not"
                 contents.contents[index].status = DownloadState.NOT
                 adapter?.notifyItemChanged(index)

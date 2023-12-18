@@ -1,8 +1,13 @@
+# Version 4.0.0
+
+>- PallyConSDK has been updated to version 4.0.0
+   >  - Changed the ExoPlayer Package -> Media3 Package
+
 # Version 3.4.6
 
 >- PallyConSDK has been updated to version 3.4.6.
    >  - Fixed an issue where the license key rotation feature for live content was not working correctly.
-   
+
 # Version 3.4.5
 
 >- PallyConSDK has been updated to version 3.4.5.
@@ -11,18 +16,18 @@
 # Version 3.4.3
 
 >- PallyConSDK has been updated to version 3.4.3.
->  - Fixed an internal error.
+   >  - Fixed an internal error.
 
 # Version 3.4.2
 
 >- PallyConSDK has been updated to version 3.4.2.
->  - Starting with 3.4.2, DB migration between 2.X.X versions is not supported.
->  - Removed "removeOldDownloadedContentDB" function 
+   >  - Starting with 3.4.2, DB migration between 2.X.X versions is not supported.
+>  - Removed "removeOldDownloadedContentDB" function
 
 # Version 3.4.1
 
 >- PallyConSDK has been updated to version 3.4.1.
->  - Fixed the LicenseCipher feature part.
+   >  - Fixed the LicenseCipher feature part.
 
 # Version 3.4.0
 

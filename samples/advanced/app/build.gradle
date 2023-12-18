@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.pallycon.pallyconsample"
         minSdk 21
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -42,10 +42,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation fileTree(include: ['*.aar'], dir: 'libs')
 
-//    implementation 'com.pallycon:widevine:3.4.1'
     
-    
-//    implementation fileTree(include: ['widevine-debug.aar'], dir: '../widevine/buildout/outputs/aar')
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'com.google.android.material:material:1.6.1'
@@ -59,13 +56,15 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
     // Exo
-    implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.1'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.18.1'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.18.1'
-    implementation 'com.google.android.exoplayer:extension-ima:2.18.1'
-    implementation 'com.google.android.exoplayer:extension-okhttp:2.18.1'
-    implementation 'com.google.android.exoplayer:extension-cast:2.18.1'
+    implementation "androidx.media3:media3-exoplayer:1.1.1"
+    implementation "androidx.media3:media3-ui:1.1.1"
+    implementation "androidx.media3:media3-exoplayer-dash:1.1.1"
+    implementation "androidx.media3:media3-exoplayer-hls:1.1.1"
+    implementation "androidx.media3:media3-exoplayer-rtsp:1.1.1"
+    implementation "androidx.media3:media3-exoplayer-smoothstreaming:1.1.1"
+    implementation "androidx.media3:media3-datasource-okhttp:1.1.1"
+//    implementation "androidx.media3:media3-exoplayer-ima:1.1.1"
+//    implementation "androidx.media3:media3-cast:1.1.1"
 
     // Gson
     implementation 'com.google.code.gson:gson:2.9.1'
