@@ -6,26 +6,26 @@ import android.os.StrictMode;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.media3.common.C;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.PlaybackException;
+import androidx.media3.common.Player;
+import androidx.media3.common.util.Util;
+import androidx.media3.datasource.DataSource;
+import androidx.media3.datasource.DefaultDataSource;
+import androidx.media3.datasource.DefaultHttpDataSource;
+import androidx.media3.datasource.HttpDataSource;
+import androidx.media3.exoplayer.ExoPlaybackException;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.dash.DashMediaSource;
+import androidx.media3.exoplayer.drm.DrmSessionManager;
+import androidx.media3.exoplayer.source.MediaSource;
+import androidx.media3.exoplayer.source.ProgressiveMediaSource;
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector;
+import androidx.media3.ui.PlayerView;
 
 import android.widget.Toast;
 
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.PlaybackException;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.drm.DrmSessionManager;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.source.dash.DashMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.StyledPlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSource;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
-import com.google.android.exoplayer2.upstream.HttpDataSource;
-import com.google.android.exoplayer2.util.Util;
 import com.pallycon.widevine.exception.PallyConException;
 import com.pallycon.widevine.exception.PallyConLicenseServerException;
 import com.pallycon.widevine.model.ContentData;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     PallyConWvSDK WVMAgent = null;
 
     private ExoPlayer player;
-    private StyledPlayerView playerView;
+    private PlayerView playerView;
     private DataSource.Factory mediaDataSourceFactory;
     private DefaultTrackSelector trackSelector;
     private MediaSource mediaSource;
