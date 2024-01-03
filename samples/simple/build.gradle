@@ -43,6 +43,6 @@ allprojects {
     }
 }
 
-apply plugin: "io.github.gradle-nexus.publish-plugin"
-apply from: "${rootDir}/widevine/scripts/publish-root.gradle"
-apply from: "${rootDir}/widevine/publish.gradle"
+
+
+
