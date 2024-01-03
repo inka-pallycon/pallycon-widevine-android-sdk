@@ -1,6 +1,10 @@
 package com.pallycon.jetcompose
 
+import android.Manifest
 import android.content.Context
+import androidx.annotation.DoNotInline
+import androidx.annotation.RequiresApi
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadNotificationHelper
 import com.pallycon.widevine.model.PallyConCallback
@@ -9,13 +13,14 @@ import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.sdk.PallyConWvSDK
 import java.io.File
 
-class ObjectSingleton {
+@UnstableApi class ObjectSingleton {
     val contents = mutableListOf<ContentData>()
     val downloadChannel = "download_channel"
-    var context: Context? = null
 
     companion object {
         private var instance: ObjectSingleton? = null
+        private const val POST_NOTIFICATION_PERMISSION_REQUEST_CODE = 100
+        var downloadNotificationHelper: DownloadNotificationHelper? = null
 
         fun getInstance(): ObjectSingleton {
             return instance ?: synchronized(this) {
@@ -31,8 +36,6 @@ class ObjectSingleton {
             contents[0].wvSDK.setPallyConEventListener(pallyConEventListener)
             return
         }
-
-        this.context = context
 
         val fi = context.getExternalFilesDir(null) ?: context.filesDir
         val localPath = File(fi, "downloads").toString()
@@ -159,15 +162,14 @@ class ObjectSingleton {
         return contents.toList()
     }
 
-    fun getDownloadNotificationHelper(): DownloadNotificationHelper {
-        return DownloadNotificationHelper(this.context!!, downloadChannel)
+    fun getDownloadNotificationHelper(context: Context): DownloadNotificationHelper {
+        if (downloadNotificationHelper == null) {
+            downloadNotificationHelper = DownloadNotificationHelper(context, downloadChannel)
+        }
+        return downloadNotificationHelper!!
     }
 
-    fun getDownloadManager(): DownloadManager? {
-        return if (contents.size > 0) {
-            contents[0].wvSDK.getDownloadManager()
-        } else {
-            null
-        }
+    fun getDownloadManager(context: Context): DownloadManager {
+        return contents[0].wvSDK.getDownloadManager(context)
     }
 }

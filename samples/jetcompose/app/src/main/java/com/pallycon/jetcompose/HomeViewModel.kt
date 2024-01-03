@@ -1,11 +1,17 @@
 package com.pallycon.jetcompose
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.DoNotInline
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.DownloadState
+import com.pallycon.widevine.model.PallyConDrmInformation
 import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.track.PallyConDownloaderTracks
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +27,7 @@ class HomeViewModel : ViewModel() {
 
     private val _contents = MutableStateFlow(ObjectSingleton.getInstance().getContentDatas())
     val contents: StateFlow<List<ContentData>> = _contents.asStateFlow()
+    val notificationPermissionToastShown = MutableStateFlow(false)
 
     private val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
         override fun onCompleted(currentUrl: String?) {
@@ -189,6 +196,14 @@ class HomeViewModel : ViewModel() {
         prepareForIndex(index)
     }
 
+    fun getDrmInformation(contentData: ContentData): PallyConDrmInformation {
+        return try {
+            contentData.wvSDK.getDrmInformation()
+        } catch (e: PallyConException.DrmException) {
+            PallyConDrmInformation(0, 0)
+        }
+    }
+
     fun pauseAll() {
         contents.value.first().wvSDK.pauseAll()
     }
@@ -198,7 +213,13 @@ class HomeViewModel : ViewModel() {
     }
 
     fun download(contentData: ContentData, track: PallyConDownloaderTracks) {
-        contentData.wvSDK.download(track)
+        try {
+            contentData.wvSDK.download(track)
+        } catch (e: PallyConException.ContentDataException) {
+            print(e)
+        } catch (e: PallyConException.DownloadException) {
+            print(e)
+        }
     }
 
     fun modifyContentDataList(newData: List<ContentData>) {
@@ -221,5 +242,16 @@ class HomeViewModel : ViewModel() {
             )
         }
         modifyContentDataList(copyList)
+    }
+
+    companion object {
+        private const val POST_NOTIFICATION_PERMISSION_REQUEST_CODE = 100
+
+        @RequiresApi(33)
+        object Api33 {
+            @get:DoNotInline
+            val postNotificationPermissionString: String
+                get() = Manifest.permission.POST_NOTIFICATIONS
+        }
     }
 }

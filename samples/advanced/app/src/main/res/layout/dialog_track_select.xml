@@ -15,18 +15,18 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/track_selection_dialog_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:minHeight="300dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/track_selection_dialog_cancel_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="#8c8c8c"
@@ -35,7 +35,7 @@
 
         <Button
             android:id="@+id/track_selection_dialog_ok_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="#8c8c8c"

@@ -3,6 +3,7 @@ package com.pallycon.jetcompose
 import android.app.Notification
 import android.content.Context
 import androidx.media3.common.util.NotificationUtil
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.offline.Download
 import androidx.media3.exoplayer.offline.DownloadManager
@@ -10,11 +11,12 @@ import androidx.media3.exoplayer.offline.DownloadNotificationHelper
 import androidx.media3.exoplayer.offline.DownloadService
 import androidx.media3.exoplayer.scheduler.PlatformScheduler
 import androidx.media3.exoplayer.scheduler.Scheduler
+import com.pallycon.jetcompose.ObjectSingleton
 import com.pallycon.widevine.R
 
-class DemoDownloadService constructor(
+@UnstableApi class DemoDownloadService constructor(
     private val JOB_ID: Int = 1,
-    private val FOREGROUND_NOTIFICATION_ID: Int = 1
+    private val FOREGROUND_NOTIFICATION_ID: Int = 1,
 ) : DownloadService(
     FOREGROUND_NOTIFICATION_ID,
     DEFAULT_FOREGROUND_NOTIFICATION_UPDATE_INTERVAL,
@@ -23,17 +25,17 @@ class DemoDownloadService constructor(
     0
 ) {
     override fun getDownloadManager(): DownloadManager {
-        val manager = ObjectSingleton.getInstance().getDownloadManager()
-        val downloadNotificationHelper = ObjectSingleton.getInstance().getDownloadNotificationHelper()
-
-        manager?.addListener(
+        val manager = ObjectSingleton.getInstance().getDownloadManager(this)
+        val downloadNotificationHelper =
+            ObjectSingleton.getInstance().getDownloadNotificationHelper(this)
+        manager.addListener(
             TerminalStateNotificationHelper(
                 this,
                 downloadNotificationHelper,
                 FOREGROUND_NOTIFICATION_ID + 1
             )
         )
-        return manager!!
+        return manager
     }
 
     override fun getScheduler(): Scheduler? {
@@ -42,15 +44,16 @@ class DemoDownloadService constructor(
 
     override fun getForegroundNotification(
         downloads: List<Download>,
-        notMetRequirements: Int
+        notMetRequirements: Int,
     ): Notification {
-        val downloadNotificationHelper = ObjectSingleton.getInstance().getDownloadNotificationHelper()
+        val downloadNotificationHelper =
+            ObjectSingleton.getInstance().getDownloadNotificationHelper(this)
 
         return downloadNotificationHelper
             .buildProgressNotification(
                 this,
                 R.drawable.pallycon_ic_baseline_arrow_downward_24,
-                null,  /* message= */
+                null,
                 null,
                 downloads,
                 notMetRequirements
@@ -58,32 +61,33 @@ class DemoDownloadService constructor(
     }
 
     private class TerminalStateNotificationHelper(
-        context: Context, notificationHelper: DownloadNotificationHelper, firstNotificationId: Int
-    ) :
-        DownloadManager.Listener {
+        context: Context, notificationHelper: DownloadNotificationHelper, firstNotificationId: Int,
+    ) : DownloadManager.Listener {
         private val context: Context
         private val notificationHelper: DownloadNotificationHelper
         private var nextNotificationId: Int
         override fun onDownloadChanged(
-            downloadManager: DownloadManager, download: Download, finalException: Exception?
+            downloadManager: DownloadManager, download: Download, finalException: Exception?,
         ) {
             val notification = when (download.state) {
                 Download.STATE_COMPLETED -> {
                     notificationHelper.buildDownloadCompletedNotification(
                         context,
-                        R.drawable.pallycon_ic_baseline_done_24,  /* contentIntent= */
+                        R.drawable.pallycon_ic_baseline_done_24,
                         null,
                         Util.fromUtf8Bytes(download.request.data)
                     )
                 }
+
                 Download.STATE_FAILED -> {
                     notificationHelper.buildDownloadFailedNotification(
                         context,
-                        R.drawable.pallycon_ic_baseline_done_24,  /* contentIntent= */
+                        R.drawable.pallycon_ic_baseline_done_24,
                         null,
                         Util.fromUtf8Bytes(download.request.data)
                     )
                 }
+
                 else -> {
                     return
                 }

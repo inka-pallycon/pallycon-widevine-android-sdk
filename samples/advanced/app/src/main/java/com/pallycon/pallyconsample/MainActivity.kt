@@ -1,9 +1,14 @@
 package com.pallycon.pallyconsample
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.DoNotInline
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.util.Util
@@ -16,8 +21,11 @@ import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
+import com.pallycon.widevine.model.PallyConDrmInformation
 import com.pallycon.widevine.model.PallyConEventListener
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -29,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     private val scope = CoroutineScope(Dispatchers.Main)
 
     val contents = ObjectSingleton.getInstance()
+
+    var notificationPermissionToastShown = false
+    var downloadContentDataNotifictionPermission: ContentData? = null
 
     private val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
         override fun onCompleted(currentUrl: String?) {
@@ -45,7 +56,8 @@ class MainActivity : AppCompatActivity() {
             val data = contents.contents.find { it.content.url == currentUrl }
             data?.let {
                 val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = "Downloading.. %" + String.format("%.0f", percent)
+                contents.contents[index].subTitle =
+                    "Downloading.. %" + String.format("%.0f", percent)
                 if (contents.contents[index].status != DownloadState.COMPLETED) {
                     contents.contents[index].status = DownloadState.DOWNLOADING
                     adapter?.notifyItemChanged(index)
@@ -101,15 +113,19 @@ class MainActivity : AppCompatActivity() {
                 is PallyConException.DrmException -> {
                     subTitle = "Drm Error"
                 }
+
                 is PallyConException.DownloadException -> {
                     subTitle = "Download Error"
                 }
+
                 is PallyConException.DetectedDeviceTimeModifiedException -> {
                     subTitle = "Device time modified Error"
                 }
+
                 is PallyConException.NetworkConnectedException -> {
                     subTitle = "Network Error"
                 }
+
                 else -> {
                     subTitle = "Failed"
                 }
@@ -138,7 +154,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (e != null && e.errorCode() != 7127) {
-                Toast.makeText(this@MainActivity, "Server Error - ${e!!.errorCode()}, ${e!!.message()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "Server Error - ${e!!.errorCode()}, ${e!!.message()}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -175,10 +195,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        for (content in contents.contents) {
-            content.wvSDK.release()
-        }
-
         contents.contents.clear()
     }
 
@@ -187,7 +203,22 @@ class MainActivity : AppCompatActivity() {
 
         adapter = RecyclerViewAdapter() { contentData, selectType ->
             when (selectType) {
-                SelectType.Download -> downloadContent(contentData)
+                SelectType.Download -> {
+                    if (!notificationPermissionToastShown &&
+                        Build.VERSION.SDK_INT >= 33 &&
+                        checkSelfPermission(Api33.postNotificationPermissionString)
+                        != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        downloadContentDataNotifictionPermission = contentData
+                        requestPermissions(
+                            arrayOf<String>(Api33.postNotificationPermissionString),
+                            POST_NOTIFICATION_PERMISSION_REQUEST_CODE
+                        )
+                    } else {
+                        downloadContent(contentData)
+                    }
+                }
+
                 SelectType.Remove -> removeContent(contentData)
                 SelectType.Pause -> pauseContentAll(contentData)
                 SelectType.Resume -> resumeContent(contentData)
@@ -279,6 +310,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == POST_NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            handlePostNotificationPermissionGrantResults(grantResults)
+        }
+    }
+
+    private fun handlePostNotificationPermissionGrantResults(grantResults: IntArray) {
+        if (!notificationPermissionToastShown
+            && (grantResults.size == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED)
+        ) {
+            Toast.makeText(
+                applicationContext,
+                "Notifications suppressed. Grant permission to see download notifications.",
+                Toast.LENGTH_LONG
+            ).show()
+            notificationPermissionToastShown = true
+        }
+        if (downloadContentDataNotifictionPermission != null) {
+            downloadContent(downloadContentDataNotifictionPermission!!)
+            downloadContentDataNotifictionPermission = null
+        }
+    }
+
     private fun resumeContent(contentData: ContentData) {
         contentData.wvSDK.resumeAll()
     }
@@ -320,85 +379,93 @@ class MainActivity : AppCompatActivity() {
                 "re-provisioning"
             )
         ) { _, i ->
-            try {
-                val wvSDK = contentData.wvSDK
-                when (i) {
-                    0 -> {
-                        scope.launch {
-                            wvSDK.downloadLicense(null, onSuccess = {
-                                Toast.makeText(this@MainActivity, "success download license", Toast.LENGTH_SHORT).show()
-                            }, onFailed = { e ->
-                                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
-                                print(e.msg)
-                            })
-
-//                            val uri = Uri.parse(contentData.content.url!!)
-//                            val dataSource = FileDataSource.Factory()
-//                            val dashManifest =
-//                                DashUtil.loadManifest(dataSource.createDataSource(), uri)
-//                            val format = DashUtil.loadFormatWithDrmInitData(
-//                                dataSource.createDataSource(),
-//                                dashManifest.getPeriod(0)
-//                            )
-//                            wvSDK.downloadLicense(format = format!!, {
-//                                Toast.makeText(this@MainActivity, "success download license", Toast.LENGTH_SHORT).show()
-//                            }, { e ->
-//                                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
-//                                print(e.msg)
-//                            })
-                        }
-                    }
-                    1 -> wvSDK.renewLicense()
-                    2 -> wvSDK.removeLicense()
-                    3 -> {
-                        wvSDK.removeAll()
-                        prepare()
-                    }
-                    4 -> {
-                        val info = wvSDK.getDrmInformation()
-                        val alertBuilder = AlertDialog.Builder(this)
-                        alertBuilder.setTitle("drm license info")
-                            .setMessage(
-                                "licenseDuration : ${info.licenseDuration} \n" +
-                                        "playbackDuration : ${info.playbackDuration}"
-                            )
-                        alertBuilder.setNegativeButton("Cancel", null)
-                        alertBuilder.show()
-                    }
-                    5 -> {
-                        val info = wvSDK.getDownloadFileInformation()
-                        val alertBuilder = AlertDialog.Builder(this)
-                        alertBuilder.setTitle("drm license info")
-                            .setMessage(
-                                "downloaded size : ${info.downloadedFileSize} \n"
-                            )
-                        alertBuilder.setNegativeButton("Cancel", null)
-                        alertBuilder.show()
-                    }
-                    6 -> {
-                        var keySetId = wvSDK.getKeySetId()
-                        val alertBuilder = AlertDialog.Builder(this)
-                        alertBuilder.setTitle("KetSetId")
-                            .setMessage(
-                                "KeySetId : ${keySetId}"
-                            )
-                        alertBuilder.setNegativeButton("Cancel", null)
-                        alertBuilder.show()
-                    }
-                    7 -> {
-                        wvSDK.reProvisionRequest({}, { e ->
-                            print(e.message())
+            val wvSDK = contentData.wvSDK
+            when (i) {
+                0 -> {
+                    scope.launch {
+                        wvSDK.downloadLicense(null, onSuccess = {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "success download license",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }, onFailed = { e ->
+                            Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT)
+                                .show()
+                            print(e.msg)
                         })
                     }
                 }
-            } catch (e: PallyConException.DrmException) {
-                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
-            } catch (e: PallyConLicenseServerException) {
-                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
+
+                1 -> wvSDK.renewLicense()
+                2 -> wvSDK.removeLicense()
+                3 -> {
+                    wvSDK.removeAll()
+                    prepare()
+                }
+
+                4 -> {
+                    var info = PallyConDrmInformation(0, 0)
+                    try {
+                        info = wvSDK.getDrmInformation()
+                    } catch (e: PallyConException.DrmException) {
+                        Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                    val alertBuilder = AlertDialog.Builder(this)
+                    alertBuilder.setTitle("drm license info")
+                        .setMessage(
+                            "licenseDuration : ${info.licenseDuration} \n" +
+                                    "playbackDuration : ${info.playbackDuration}"
+                        )
+                    alertBuilder.setNegativeButton("Cancel", null)
+                    alertBuilder.show()
+                }
+
+                5 -> {
+                    val info = wvSDK.getDownloadFileInformation()
+                    val alertBuilder = AlertDialog.Builder(this)
+                    alertBuilder.setTitle("drm license info")
+                        .setMessage(
+                            "downloaded size : ${info.downloadedFileSize} \n"
+                        )
+                    alertBuilder.setNegativeButton("Cancel", null)
+                    alertBuilder.show()
+                }
+
+                6 -> {
+                    var keySetId = wvSDK.getKeySetId()
+                    val alertBuilder = AlertDialog.Builder(this)
+                    alertBuilder.setTitle("KetSetId")
+                        .setMessage(
+                            "KeySetId : ${keySetId}"
+                        )
+                    alertBuilder.setNegativeButton("Cancel", null)
+                    alertBuilder.show()
+                }
+
+                7 -> {
+                    wvSDK.reProvisionRequest({}, { e ->
+                        print(e.message())
+                    })
+                }
             }
+
         }
         builder.setNegativeButton("Cancel", null)
         val dialog: Dialog = builder.create()
         dialog.show()
+    }
+
+    companion object {
+        private const val POST_NOTIFICATION_PERMISSION_REQUEST_CODE = 100
+
+        @RequiresApi(33)
+        private object Api33 {
+            @get:DoNotInline
+            val postNotificationPermissionString: String
+                get() = Manifest.permission.POST_NOTIFICATIONS
+        }
     }
 }

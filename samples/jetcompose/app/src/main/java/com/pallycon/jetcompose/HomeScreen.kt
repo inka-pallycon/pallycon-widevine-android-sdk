@@ -1,7 +1,11 @@
 package com.pallycon.jetcompose
 
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -40,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.navigation.NavController
 import com.google.gson.Gson
 import com.pallycon.widevine.exception.PallyConException
@@ -92,6 +97,23 @@ fun ContentListItem(
     val viewModel = LocalViewModel.current
     val dialogState = remember { mutableStateOf(false) }
 
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (!isGranted && !viewModel.notificationPermissionToastShown.value) {
+            Toast.makeText(
+                context,
+                "Notifications suppressed. Grant permission to see download notifications.",
+                Toast.LENGTH_LONG
+            ).show()
+            viewModel.notificationPermissionToastShown.value = true
+        }
+
+        contentData.downloadTracks?.let {
+            viewModel.download(contentData, it)
+        }
+    }
+
     if (dialogState.value) {
         Dialog(onDismissRequest = { dialogState.value = false }) {
             Card(
@@ -103,8 +125,7 @@ fun ContentListItem(
             ) {
                 val wvSDK = contentData.wvSDK
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -149,7 +170,7 @@ fun ContentListItem(
                     }) { Text(text = "remove all") }
 
                     TextButton(onClick = {
-                        val info = wvSDK.getDrmInformation()
+                        val info = viewModel.getDrmInformation(contentData)
                         val alertBuilder = AlertDialog.Builder(context)
                         alertBuilder.setTitle("drm license info")
                             .setMessage(
@@ -224,7 +245,7 @@ fun ContentListItem(
         ) {
             Column {
                 Text(
-                    text = contentData.title,
+                    text = contentData.title.take(14) + if (contentData.title.length > 14) "..." else "",
                     modifier = Modifier
                         .padding(end = 8.dp),
                     style = TextStyle(
@@ -236,7 +257,7 @@ fun ContentListItem(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = contentData.subTitle,
+                    text = contentData.subTitle.take(20) + if (contentData.subTitle.length > 20) "..." else "",
                     modifier = Modifier
                         .padding(end = 8.dp),
                     style = TextStyle(
@@ -284,8 +305,21 @@ fun ContentListItem(
                                 }
 
                                 else -> {
-                                    contentData.downloadTracks?.let {
-                                        viewModel.download(contentData, it)
+                                    if (!viewModel.notificationPermissionToastShown.value &&
+                                        Build.VERSION.SDK_INT >= 33 &&
+                                        checkSelfPermission(
+                                            context,
+                                            HomeViewModel.Companion.Api33.postNotificationPermissionString
+                                        )
+                                        != PackageManager.PERMISSION_GRANTED
+                                    ) {
+                                        requestPermissionLauncher.launch(
+                                            HomeViewModel.Companion.Api33.postNotificationPermissionString
+                                        )
+                                    } else {
+                                        contentData.downloadTracks?.let {
+                                            viewModel.download(contentData, it)
+                                        }
                                     }
                                 }
                             }

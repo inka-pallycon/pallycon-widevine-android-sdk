@@ -12,10 +12,11 @@ import java.io.File
 class ObjectSingleton {
     val contents = mutableListOf<ContentData>()
     val downloadChannel = "download_channel"
-    var context: Context? = null
 
     companion object {
         private var instance: ObjectSingleton? = null
+        var downloadNotificationHelper: DownloadNotificationHelper? = null
+        var context: Context? = null
 
         fun getInstance(): ObjectSingleton {
             return instance ?: synchronized(this) {
@@ -26,10 +27,10 @@ class ObjectSingleton {
         }
     }
 
-    fun createContents(context: Context, pallyConEventListener: PallyConEventListener?, pallyConCallback: PallyConCallback?) {
-        this.context = context
+    fun createContents(con: Context, pallyConEventListener: PallyConEventListener?, pallyConCallback: PallyConCallback?) {
+        context = con
 
-        val fi = context.getExternalFilesDir(null) ?: context.filesDir
+        val fi = con.getExternalFilesDir(null) ?: con.filesDir
         val localPath = File(fi, "downloads").toString()
 
         val config = PallyConDrmConfigration(
@@ -44,7 +45,7 @@ class ObjectSingleton {
             cookie = null
         )
         val wvSDK = PallyConWvSDK.createPallyConWvSDK(
-            context,
+            context!!,
             data
         )
         wvSDK.setPallyConEventListener(pallyConEventListener)
@@ -74,7 +75,7 @@ class ObjectSingleton {
             config2
         )
         val wvSDK2 = PallyConWvSDK.createPallyConWvSDK(
-            context,
+            con,
             data2
         )
         val state2 = wvSDK2.getDownloadState()
@@ -102,7 +103,7 @@ class ObjectSingleton {
             drmConfig = config3
         )
         val wvSDK3 = PallyConWvSDK.createPallyConWvSDK(
-            context,
+            con,
             data3
         )
         val state3 = wvSDK3.getDownloadState()
@@ -130,7 +131,7 @@ class ObjectSingleton {
             drmConfig = config4,
         )
         val wvSDK4 = PallyConWvSDK.createPallyConWvSDK(
-            context,
+            con,
             data4
         )
         val state4 = wvSDK4.getDownloadState()
@@ -148,15 +149,20 @@ class ObjectSingleton {
         )
     }
 
-    fun getDownloadNotificationHelper(): DownloadNotificationHelper {
-        return DownloadNotificationHelper(this.context!!, downloadChannel)
+//    fun setDownloadService(downloadServiceContext: Context) {
+//        if (contents.size > 0) {
+//            contents[0].wvSDK.setDownloadService(DemoDownloadService::class.java)
+//        }
+//    }
+
+    fun getDownloadNotificationHelper(context: Context): DownloadNotificationHelper {
+        if (downloadNotificationHelper == null) {
+            downloadNotificationHelper = DownloadNotificationHelper(context, downloadChannel)
+        }
+        return downloadNotificationHelper!!
     }
 
-    fun getDownloadManager(): DownloadManager? {
-        return if (contents.size > 0) {
-            contents[0].wvSDK.getDownloadManager()
-        } else {
-            null
-        }
+    fun getDownloadManager(context: Context): DownloadManager {
+        return contents[0].wvSDK.getDownloadManager(context)
     }
 }

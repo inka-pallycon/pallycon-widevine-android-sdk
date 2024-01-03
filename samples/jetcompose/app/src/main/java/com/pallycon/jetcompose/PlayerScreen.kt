@@ -1,13 +1,21 @@
 package com.pallycon.jetcompose
 
 import android.content.Context
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.PlaybackException
@@ -39,8 +47,12 @@ fun PlayerScreen(pallyConData: PallyConData, navController: NavController) {
 }
 
 @Composable
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 fun VideoPlayer(mediaSource: MediaSource) {
     val context = LocalContext.current
+    val playbackPosition = rememberSaveable {
+        mutableStateOf(0L)
+    }
 
     val exoPlayer = remember(context, mediaSource) {
         ExoPlayer.Builder(context).build().apply {
@@ -59,7 +71,18 @@ fun VideoPlayer(mediaSource: MediaSource) {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
                 }
+
+                override fun onEvents(player: Player, events: Player.Events) {
+                    super.onEvents(player, events)
+                    if (events.size() > 0 &&
+                        events[0] == Player.EVENT_SURFACE_SIZE_CHANGED) {
+                        playbackPosition.value = currentPosition
+                    }
+                }
             })
+
+            seekTo(playbackPosition.value)
+
             prepare()
             play()
         }
@@ -120,15 +143,15 @@ fun getMediaSourceUsingSDK(context: Context, pallyConData: PallyConData): MediaS
         }
     }
     wvmAgent.setPallyConEventListener(pallyConEventListener)
-    try {
-        return wvmAgent.getMediaSource()
+    return try {
+        wvmAgent.getMediaSource()
     } catch (e: PallyConException.ContentDataException) {
         e.printStackTrace()
         Toast.makeText(context, e?.message, Toast.LENGTH_LONG).show()
-        return null
+        null
     } catch (e: PallyConException.DetectedDeviceTimeModifiedException) {
         e.printStackTrace()
         Toast.makeText(context, e?.message, Toast.LENGTH_LONG).show()
-        return null
+        null
     }
 }
