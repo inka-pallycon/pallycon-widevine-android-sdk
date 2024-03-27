@@ -99,9 +99,11 @@ $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getDownloadFileInformati
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getDownloadManager/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-download-manager.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getDownloadState/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-download-state.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getDrmInformation/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-drm-information.html
+$dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getDrmSessionManager/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-drm-session-manager.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getKeySetId/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-key-set-id.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getMediaItem/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-media-item.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getMediaSource/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-media-source.html
+$dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/getMediaSource/#com.google.android.exoplayer2.drm.DrmSessionManager/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/get-media-source.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/migrateDownloadedContent/#kotlin.String#kotlin.String?/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/migrate-downloaded-content.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/needsMigrateDownloadedContent/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/needs-migrate-downloaded-content.html
 $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/pauseAll/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.sdk/-pally-con-wv-s-d-k/pause-all.html

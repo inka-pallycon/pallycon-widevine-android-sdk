@@ -6,6 +6,7 @@ import android.view.SurfaceView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.StyledPlayerView
@@ -57,6 +58,7 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
+        var mediaItem:MediaItem? = null
         var mediaSource: MediaSource? = null
         try {
             val drmInfo = wvSDK?.getDrmInformation()
@@ -66,7 +68,7 @@ class PlayerActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Expired license", Toast.LENGTH_LONG)
                         .show()
                 }
-                // mediaItem = wvSDK?.getMediaItem()
+                mediaItem = wvSDK?.getMediaItem()
                 wvSDK?.getMediaSource()?.let { media ->
                     mediaSource = media
                 }
@@ -88,45 +90,58 @@ class PlayerActivity : AppCompatActivity() {
         // using mediaItem
         /*
          ExoPlayer.Builder(this).setMediaSourceFactory(
-                DefaultMediaSourceFactory(this)
+                DefaultMediaSourceFactory(this).
                 setDataSourceFactory(wvSDK!!.getDataSourceFactory())).build()
         */
 
-        if (mediaSource == null) {
-            return
-        }
-
-        ExoPlayer.Builder(this)
-//            .setRenderersFactory(DefaultRenderersFactory(this)
-//                .setEnableDecoderFallback(true))
-            .build()
-            .also { player ->
-                exoPlayer = player
-                binding.exoplayerView.player = player
-//                exoPlayer?.setVideoSurfaceView(binding.surfaceView)
-//                exoPlayer?.setVideoSurface(binding.surfaceView.holder.surface)
-                exoPlayer?.setMediaSource(mediaSource!!)
+        var reBuildMediaItem = mediaItem!!.buildUpon().build()
+        ExoPlayer.Builder(this).setMediaSourceFactory(
+            DefaultMediaSourceFactory(this).
+                    setDataSourceFactory(wvSDK!!.getDataSourceFactory()))
+            .build().also {
+                exoPlayer = it
+                binding.exoplayerView.player = it
+                exoPlayer?.setMediaItem(reBuildMediaItem)
                 exoPlayer?.prepare()
                 exoPlayer?.playWhenReady = true
-                exoPlayer?.addListener(object : Player.Listener {
-                    override fun onPlayerError(error: PlaybackException) {
-                        super.onPlayerError(error)
-                        if (error.errorCode ==
-                            PlaybackException.ERROR_CODE_DRM_LICENSE_EXPIRED) {
-                            Toast.makeText(applicationContext, "License Expired", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    override fun onIsPlayingChanged(isPlaying: Boolean) {
-                        super.onIsPlayingChanged(isPlaying)
-                        if (isPlaying && exoPlayer != null) {
-//                            viewModel.setDuration(exoPlayer!!.duration)
-                        }
-                    }
-                })
             }
+
+//        if (mediaSource == null) {
+//            return
+//        }
+//
+//        ExoPlayer.Builder(this)
+////            .setRenderersFactory(DefaultRenderersFactory(this)
+////                .setEnableDecoderFallback(true))
+//            .build()
+//            .also { player ->
+//                exoPlayer = player
+//                binding.exoplayerView.player = player
+////                exoPlayer?.setVideoSurfaceView(binding.surfaceView)
+////                exoPlayer?.setVideoSurface(binding.surfaceView.holder.surface)
+//                exoPlayer?.setMediaSource(mediaSource!!)
+//
+//                exoPlayer?.prepare()
+//                exoPlayer?.playWhenReady = true
+//                exoPlayer?.addListener(object : Player.Listener {
+//                    override fun onPlayerError(error: PlaybackException) {
+//                        super.onPlayerError(error)
+//                        if (error.errorCode ==
+//                            PlaybackException.ERROR_CODE_DRM_LICENSE_EXPIRED) {
+//                            Toast.makeText(applicationContext, "License Expired", Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//
+//                    override fun onIsPlayingChanged(isPlaying: Boolean) {
+//                        super.onIsPlayingChanged(isPlaying)
+//                        if (isPlaying && exoPlayer != null) {
+////                            viewModel.setDuration(exoPlayer!!.duration)
+//                        }
+//                    }
+//                })
+//            }
     }
 
     override fun onStart() {

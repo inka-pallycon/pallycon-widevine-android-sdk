@@ -1,11 +1,16 @@
 package com.pallycon.pallyconsample
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -16,14 +21,10 @@ import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
-import com.pallycon.widevine.model.PallyConDrmConfigration
 import com.pallycon.widevine.model.PallyConEventListener
-import com.pallycon.widevine.sdk.PallyConWvSDK
 import kotlinx.coroutines.*
-import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
-import com.pallycon.widevine.model.ContentData as PallyConData
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity() {
     private val scope = CoroutineScope(Dispatchers.Main)
 
     val contents = ObjectSingleton.getInstance()
+
+    companion object {
+        private const val REQUEST_CODE_POST_NOTIFICATIONS = 1
+    }
 
     private val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
         override fun onCompleted(currentUrl: String?) {
@@ -49,7 +54,8 @@ class MainActivity : AppCompatActivity() {
             val data = contents.contents.find { it.content.url == currentUrl }
             data?.let {
                 val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = "Downloading.. %" + String.format("%.0f", percent)
+                contents.contents[index].subTitle =
+                    "Downloading.. %" + String.format("%.0f", percent)
                 if (contents.contents[index].status != DownloadState.COMPLETED) {
                     contents.contents[index].status = DownloadState.DOWNLOADING
                     adapter?.notifyItemChanged(index)
@@ -106,15 +112,19 @@ class MainActivity : AppCompatActivity() {
                 is PallyConException.DrmException -> {
                     subTitle = "Drm Error"
                 }
+
                 is PallyConException.DownloadException -> {
                     subTitle = "Download Error"
                 }
+
                 is PallyConException.DetectedDeviceTimeModifiedException -> {
                     subTitle = "Device time modified Error"
                 }
+
                 is PallyConException.NetworkConnectedException -> {
                     subTitle = "Network Error"
                 }
+
                 else -> {
                     subTitle = "Failed"
                 }
@@ -143,7 +153,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (e != null && e.errorCode() != 7127) {
-                Toast.makeText(this@MainActivity, "Server Error - ${e!!.errorCode()}, ${e!!.message()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "Server Error - ${e!!.errorCode()}, ${e!!.message()}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -207,6 +221,20 @@ class MainActivity : AppCompatActivity() {
         val animator: RecyclerView.ItemAnimator? = binding.recyclerView.getItemAnimator()
         if (animator is SimpleItemAnimator) {
             (animator as SimpleItemAnimator).setSupportsChangeAnimations(false)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_CODE_POST_NOTIFICATIONS
+                )
+            }
         }
 
         prepare()
@@ -331,9 +359,17 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         scope.launch {
                             wvSDK.downloadLicense(null, onSuccess = {
-                                Toast.makeText(this@MainActivity, "success download license", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "success download license",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }, onFailed = { e ->
-                                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "${e.message()}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 print(e.msg)
                             })
 
@@ -353,12 +389,14 @@ class MainActivity : AppCompatActivity() {
 //                            })
                         }
                     }
+
                     1 -> wvSDK.renewLicense()
                     2 -> wvSDK.removeLicense()
                     3 -> {
                         wvSDK.removeAll()
                         prepare()
                     }
+
                     4 -> {
                         val info = wvSDK.getDrmInformation()
                         val alertBuilder = AlertDialog.Builder(this)
@@ -370,6 +408,7 @@ class MainActivity : AppCompatActivity() {
                         alertBuilder.setNegativeButton("Cancel", null)
                         alertBuilder.show()
                     }
+
                     5 -> {
                         val info = wvSDK.getDownloadFileInformation()
                         val alertBuilder = AlertDialog.Builder(this)
@@ -380,6 +419,7 @@ class MainActivity : AppCompatActivity() {
                         alertBuilder.setNegativeButton("Cancel", null)
                         alertBuilder.show()
                     }
+
                     6 -> {
                         var keySetId = wvSDK.getKeySetId()
                         val alertBuilder = AlertDialog.Builder(this)
@@ -390,6 +430,7 @@ class MainActivity : AppCompatActivity() {
                         alertBuilder.setNegativeButton("Cancel", null)
                         alertBuilder.show()
                     }
+
                     7 -> {
                         wvSDK.reProvisionRequest({}, { e ->
                             print(e.message())
