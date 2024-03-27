@@ -3,6 +3,8 @@ package com.pallycon.pallyconsample
 import android.content.Context
 import com.google.android.exoplayer2.offline.DownloadManager
 import com.google.android.exoplayer2.ui.DownloadNotificationHelper
+import com.pallycon.widevine.exception.PallyConException
+import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.PallyConCallback
 import com.pallycon.widevine.model.PallyConDrmConfigration
 import com.pallycon.widevine.model.PallyConEventListener

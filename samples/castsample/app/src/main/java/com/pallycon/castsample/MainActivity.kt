@@ -228,8 +228,7 @@ class MainActivity : AppCompatActivity() {
         )
         val wvSDK = PallyConWvSDK.createPallyConWvSDK(
             this,
-            data
-        )
+            data)
 
         wvSDK.setPallyConEventListener(pallyConEventListener)
 //        wvSDK.setPallyConCallback(pallyConCallback)
