@@ -3,6 +3,7 @@ package com.pallycon.exoplayersample.simple;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +25,6 @@ import androidx.media3.exoplayer.source.ProgressiveMediaSource;
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector;
 import androidx.media3.ui.PlayerView;
 
-import android.widget.Toast;
-
 import com.pallycon.widevine.exception.PallyConException;
 import com.pallycon.widevine.exception.PallyConLicenseServerException;
 import com.pallycon.widevine.model.ContentData;
@@ -33,9 +32,13 @@ import com.pallycon.widevine.model.PallyConDrmConfigration;
 import com.pallycon.widevine.model.PallyConEventListener;
 import com.pallycon.widevine.sdk.PallyConWvSDK;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     PallyConWvSDK WVMAgent = null;
+    PallyConWvSDK WVMAgent2 = null;
 
     private ExoPlayer player;
     private PlayerView playerView;
@@ -135,20 +138,37 @@ public class MainActivity extends AppCompatActivity {
         // TODO : 1.set content information
         PallyConDrmConfigration config = new PallyConDrmConfigration(
             "DEMO",
-                "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJ0ZXN0VXNlciIsImRybV90eXBlIjoid2lkZXZpbmUiLCJzaXRlX2lkIjoiREVNTyIsImhhc2giOiJpSGlpQmM3U1QrWTR1T0h1VnVPQVNmNU1nTDVibDJMb1FuNzNHREtcLzltbz0iLCJjaWQiOiJtdWx0aXRyYWNrcyIsInBvbGljeSI6IjlXcUlXa2RocHhWR0s4UFNJWWNuSnNjdnVBOXN4Z3ViTHNkK2FqdVwvYm9tUVpQYnFJK3hhZVlmUW9jY2t2dUVmQWFxZFc1aFhnSk5nY1NTM2ZTN284TnNqd3N6ak11dnQrMFF6TGtaVlZObXgwa2VmT2Uyd0NzMlRJVGdkVTRCdk45YWJoZDByUWtNSXJtb0llb0pIcUllSGNSdlZmNlQxNFJtVEFERXBDWTQ2NHdxamNzWjA0Uk82Zm90Nm5yZjhXSGZ3QVNjek9kV1d6QStFRlRadDhRTWw5SFRueWVYK1g3YXp1Y2VmQjJBd2V0XC9hQm0rZXpmUERodFZuaUhsSiIsInRpbWVzdGFtcCI6IjIwMjItMDgtMDVUMDY6MDM6MjJaIn0="
+            "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJwYWxseWNvbiIsImRybV90eXBlIjoid2lkZXZpbmUiLCJzaXRlX2lkIjoiREVNTyIsImhhc2giOiJkNTBDSVVUS1RwRDl6T3dGaU9DSysrXC83Q3pLOStZN3NkcHFhUUppdDJWQT0iLCJjaWQiOiJUZXN0UnVubmVyIiwicG9saWN5IjoiOVdxSVdrZGhweFZHSzhQU0lZY25Kc2N2dUE5c3hndWJMc2QrYWp1XC9ib21RWlBicUkreGFlWWZRb2Nja3Z1RWZBYXFkVzVoWGdKTmdjU1MzZlM3bzhNczB3QXNuN05UbmJIUmtwWDFDeTEyTkhwMlZPN1pMeFJvZDhVdkUwZnBFbUpYOUpuRDh6ZktkdE9RWk9UYXljK280RzNCT0xmU29OaFpWbkIwUGxEbW1rVk5jbXpndko2YloxdXBudjFcLzJFM2lXZXd3eklTNFVOQlhTS21zVUFCZnBRQjg4Q2VJYlZSM0hKZWJvcEpwZG1DTFFvRmtCT09DQU9qWElBOUVHIiwidGltZXN0YW1wIjoiMjAyMi0xMC0xMVQwNzowMToxN1oifQ=="
         );
         ContentData content = new ContentData(
-                "https://contents.pallycon.com/DEV/sglee/multitracks/dash/stream.mpd",
+                "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/dash/stream.mpd",
                 "",
                 config
+        );
+
+        PallyConDrmConfigration config2 = new PallyConDrmConfigration(
+                "DEMO",
+                "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJwYWxseWNvbiIsImRybV90eXBlIjoid2lkZXZpbmUiLCJzaXRlX2lkIjoiREVNTyIsImhhc2giOiJkNTBDSVVUS1RwRDl6T3dGaU9DSysrXC83Q3pLOStZN3NkcHFhUUppdDJWQT0iLCJjaWQiOiJUZXN0UnVubmVyIiwicG9saWN5IjoiOVdxSVdrZGhweFZHSzhQU0lZY25Kc2N2dUE5c3hndWJMc2QrYWp1XC9ib21RWlBicUkreGFlWWZRb2Nja3Z1RWZBYXFkVzVoWGdKTmdjU1MzZlM3bzhNczB3QXNuN05UbmJIUmtwWDFDeTEyTkhwMlZPN1pMeFJvZDhVdkUwZnBFbUpYOUpuRDh6ZktkdE9RWk9UYXljK280RzNCT0xmU29OaFpWbkIwUGxEbW1rVk5jbXpndko2YloxdXBudjFcLzJFM2lXZXd3eklTNFVOQlhTS21zVUFCZnBRQjg4Q2VJYlZSM0hKZWJvcEpwZG1DTFFvRmtCT09DQU9qWElBOUVHIiwidGltZXN0YW1wIjoiMjAyMi0xMC0xMVQwNzowMToxN1oifQ=="
+        );
+
+        ContentData content2 = new ContentData(
+                "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_MULTITRACK/dash/stream.mpd",
+                "",
+                config2
         );
 
         // TODO: 2. initialize PallyconWVM SDK
         WVMAgent = PallyConWvSDK.createPallyConWvSDK(this, content);
         WVMAgent.setPallyConEventListener(drmListener);
+
+        DrmSessionManager manager = WVMAgent.getDrmSessionManager();
+
+        WVMAgent2 = PallyConWvSDK.createPallyConWvSDK(this, content2);
         MediaSource mediaSource = null;
+        MediaSource mediaSource2 = null;
         try {
-            mediaSource = WVMAgent.getMediaSource();
+            mediaSource = WVMAgent.getMediaSource(manager);
+            mediaSource2 = WVMAgent2.getMediaSource(manager);
         } catch (PallyConException.ContentDataException e) {
             e.printStackTrace();
             return;
@@ -161,7 +181,14 @@ public class MainActivity extends AppCompatActivity {
         player = new ExoPlayer.Builder(/* context= */ this)
                 .setTrackSelector(trackSelector)
                 .build();
-        player.setMediaSource(mediaSource);
+
+//        player.setMediaSource(mediaSource);
+        ArrayList<MediaSource> mediaSources = new ArrayList<>();
+        mediaSources.add(mediaSource);
+        mediaSources.add(mediaSource2);
+
+        player.setMediaSources(mediaSources);
+
         player.addListener(playerEventListener);
         playerView.setPlayer(player);
         player.setPlayWhenReady(true);

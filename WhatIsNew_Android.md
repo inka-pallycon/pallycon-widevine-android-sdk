@@ -1,3 +1,12 @@
+# Version 4.0.1
+
+>- PallyConSDK has been updated to version 4.0.1.
+   >  - Added a "getDrmSessionManager" function.
+   >  - Added "getMediaSource" function that utilizes the drmSessionManager parameter.
+   >    -  You can specify a drmSessionManager to create the mediaSource object.
+   >  - Fixed an issue that caused the download() function to crash when running in the main thread from now on.
+   >    - A function runs as a background thread under the hood.
+
 # Version 4.0.0
 
 >- PallyConSDK has been updated to version 4.0.0

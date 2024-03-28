@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             val data = contents.contents.find { it.content.url == currentUrl }
             data?.let {
                 val index = contents.contents.indexOf(it)
+                prepareForIndex(index)
                 contents.contents[index].subTitle = "Not"
                 contents.contents[index].status = DownloadState.NOT
                 adapter?.notifyItemChanged(index)
@@ -195,6 +196,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        for (content in contents.contents) {
+            content.wvSDK.release()
+        }
+
         contents.contents.clear()
     }
 
