@@ -6,6 +6,7 @@
    >    -  You can specify a drmSessionManager to create the mediaSource object.
    >  - Fixed an issue that caused the download() function to crash when running in the main thread from now on.
    >    - A function runs as a background thread under the hood.
+   >  - Fixed crash when selecting more than one video track
 
 # Version 4.0.0
 
