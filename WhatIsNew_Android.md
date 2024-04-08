@@ -1,6 +1,6 @@
-# Version 4.0.2
+# Version 4.1.0
 
->- PallyConSDK has been updated to version 4.0.2.
+>- PallyConSDK has been updated to version 4.1.0.
 >  - Fixed redownload not happening if remove after pause
 
 # Version 4.0.1
