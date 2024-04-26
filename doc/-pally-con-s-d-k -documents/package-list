@@ -128,6 +128,7 @@ $dokka.location:com.pallycon.widevine.sdk/PallyConWvSDK/updateSecure/#kotlin.Fun
 $dokka.location:com.pallycon.widevine.service////PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.service/index.html
 $dokka.location:com.pallycon.widevine.service/PallyConDownloadService///PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.service/-pally-con-download-service/index.html
 $dokka.location:com.pallycon.widevine.service/PallyConDownloadService/PallyConDownloadService/#kotlin.Int#kotlin.Int/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.service/-pally-con-download-service/-pally-con-download-service.html
+$dokka.location:com.pallycon.widevine.service/PallyConDownloadService/onDestroy/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.service/-pally-con-download-service/on-destroy.html
 $dokka.location:com.pallycon.widevine.track////PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.track/index.html
 $dokka.location:com.pallycon.widevine.track/AudioTrackInfo///PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.track/-audio-track-info/index.html
 $dokka.location:com.pallycon.widevine.track/AudioTrackInfo/getChannelCount/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.track/-audio-track-info/get-channel-count.html
@@ -175,6 +176,7 @@ $dokka.location:com.pallycon.widevine.util////PointingToDeclaration/-pally-con-
 $dokka.location:com.pallycon.widevine.util/GlobalObjectUtil.Companion///PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/-companion/index.html
 $dokka.location:com.pallycon.widevine.util/GlobalObjectUtil.Companion/fetchBytesFromHttpsUrl/#com.pallycon.widevine.model.ContentData/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/-companion/fetch-bytes-from-https-url.html
 $dokka.location:com.pallycon.widevine.util/GlobalObjectUtil.Companion/getInstance/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/-companion/get-instance.html
+$dokka.location:com.pallycon.widevine.util/GlobalObjectUtil.Companion/release/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/-companion/release.html
 $dokka.location:com.pallycon.widevine.util/GlobalObjectUtil///PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/index.html
 $dokka.location:com.pallycon.widevine.util/GlobalObjectUtil/GlobalObjectUtil/#/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/-global-object-util.html
 $dokka.location:com.pallycon.widevine.util/GlobalObjectUtil/createLicenseCipher/#android.content.Context#kotlin.String/PointingToDeclaration/-pally-con-s-d-k -documents/com.pallycon.widevine.util/-global-object-util/create-license-cipher.html

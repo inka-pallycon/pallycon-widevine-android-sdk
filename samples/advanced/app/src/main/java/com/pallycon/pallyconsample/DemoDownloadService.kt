@@ -1,7 +1,10 @@
 package com.pallycon.pallyconsample
 
 import android.app.Notification
+import android.app.Service
 import android.content.Context
+import android.content.Intent
+import androidx.media3.common.util.Log
 import androidx.media3.common.util.NotificationUtil
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.offline.Download
@@ -22,6 +25,11 @@ class DemoDownloadService constructor(
     R.string.exo_download_notification_channel_name,
     0
 ) {
+    override fun onDestroy() {
+        clearDownloadManagerHelpers()
+        super.onDestroy()
+    }
+
     override fun getDownloadManager(): DownloadManager {
         val manager = ObjectSingleton.getInstance().getDownloadManager()
         val downloadNotificationHelper = ObjectSingleton.getInstance().getDownloadNotificationHelper()
@@ -42,7 +50,7 @@ class DemoDownloadService constructor(
 
     override fun getForegroundNotification(
         downloads: List<Download>,
-        notMetRequirements: Int
+        notMetRequirements: Int,
     ): Notification {
         val downloadNotificationHelper = ObjectSingleton.getInstance().getDownloadNotificationHelper()
 
@@ -58,14 +66,14 @@ class DemoDownloadService constructor(
     }
 
     private class TerminalStateNotificationHelper(
-        context: Context, notificationHelper: DownloadNotificationHelper, firstNotificationId: Int
+        context: Context, notificationHelper: DownloadNotificationHelper, firstNotificationId: Int,
     ) :
         DownloadManager.Listener {
         private val context: Context
         private val notificationHelper: DownloadNotificationHelper
         private var nextNotificationId: Int
         override fun onDownloadChanged(
-            downloadManager: DownloadManager, download: Download, finalException: Exception?
+            downloadManager: DownloadManager, download: Download, finalException: Exception?,
         ) {
             val notification = when (download.state) {
                 Download.STATE_COMPLETED -> {

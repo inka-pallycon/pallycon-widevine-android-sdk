@@ -28,7 +28,6 @@
             android:theme="@style/Theme.PallyconSample.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,11 +39,9 @@
 
         <service
             android:name=".DemoDownloadService"
-            android:exported="false"
-            android:foregroundServiceType="dataSync">
+            android:exported="false">
             <intent-filter>
                 <action android:name="androidx.media3.exoplayer.downloadService.action.RESTART" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
