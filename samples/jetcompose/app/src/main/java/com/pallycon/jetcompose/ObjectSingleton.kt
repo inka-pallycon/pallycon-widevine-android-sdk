@@ -29,6 +29,10 @@ import java.io.File
                 }
             }
         }
+
+        fun release() {
+            instance = null
+        }
     }
 
     fun createContents(context: Context, pallyConEventListener: PallyConEventListener?, pallyConCallback: PallyConCallback?) {

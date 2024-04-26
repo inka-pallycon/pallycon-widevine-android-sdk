@@ -24,6 +24,11 @@ import com.pallycon.widevine.R
     R.string.exo_download_notification_channel_name,
     0
 ) {
+    override fun onDestroy() {
+        clearDownloadManagerHelpers()
+        super.onDestroy()
+    }
+
     override fun getDownloadManager(): DownloadManager {
         val manager = ObjectSingleton.getInstance().getDownloadManager(this)
         val downloadNotificationHelper =
