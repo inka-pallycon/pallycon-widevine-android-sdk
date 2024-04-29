@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
 
         <meta-data
             android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-            android:value="com.google.android.exoplayer2.ext.cast.DefaultCastOptionsProvider" />
+            android:value="androidx.media3.cast.DefaultCastOptionsProvider" />
 
         <activity
             android:name=".MainActivity"
@@ -34,16 +34,6 @@
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:theme="@style/Theme.AppCompat"
             android:exported="false"/>
-
-        <service
-            android:name="com.pallycon.widevine.service.PallyConDownloadService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.exoplayer.downloadService.action.RESTART" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

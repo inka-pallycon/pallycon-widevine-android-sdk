@@ -7,29 +7,25 @@ import android.view.Menu
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ext.cast.CastPlayer
-import com.google.android.exoplayer2.ext.cast.SessionAvailabilityListener
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.util.Util
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.ui.PlayerView
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
+import com.google.android.gms.cast.framework.CastStateListener
 import com.pallycon.castsample.databinding.ActivityPlayerBinding
 import com.pallycon.widevine.exception.PallyConException
-import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.ContentData
 import com.pallycon.widevine.model.DownloadState
-import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.sdk.PallyConWvSDK
+import java.util.concurrent.Executors
 
-
-class PlayerActivity : AppCompatActivity() {
+@UnstableApi
+@OptIn(UnstableApi::class)
+class PlayerActivity : CastStateListener, AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerBinding
-    private var playerView: StyledPlayerView? = null
+    private var playerView: PlayerView? = null
     private var castContext: CastContext? = null
-    private var castPlayer: CastPlayer? = null
     private var wvSDK: PallyConWvSDK? = null
     private var playerManager: PlayerManager? = null
 
@@ -39,7 +35,12 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        castContext = CastContext.getSharedInstance(this)
+        val castExecutor = Executors.newSingleThreadExecutor()
+        CastContext.getSharedInstance(this, castExecutor).addOnCompleteListener {
+            castContext = it.result
+            castContext?.addCastStateListener(this)
+            buildSample()
+        }
 
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -123,19 +124,20 @@ class PlayerActivity : AppCompatActivity() {
             },
             playerView!!
         )
-
-        buildSample()
     }
 
     override fun onStop() {
         super.onStop()
-        exoPlayer?.playWhenReady = false
         if (isFinishing) {
             releasePlayer()
         }
     }
 
     private fun releasePlayer() {
-        exoPlayer?.release()
+        playerManager?.release()
+    }
+
+    override fun onCastStateChanged(p0: Int) {
+        print(p0);
     }
 }

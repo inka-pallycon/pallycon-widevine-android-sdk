@@ -4,13 +4,22 @@ import android.content.Context
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.Player.*
-import com.google.android.exoplayer2.ext.cast.CastPlayer
-import com.google.android.exoplayer2.ext.cast.SessionAvailabilityListener
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.ui.StyledPlayerControlView
-import com.google.android.exoplayer2.ui.StyledPlayerView
+import androidx.media3.cast.CastPlayer
+import androidx.media3.cast.SessionAvailabilityListener
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.Player.Listener
+import androidx.media3.common.Player.STATE_ENDED
+import androidx.media3.common.Player.STATE_IDLE
+import androidx.media3.common.Timeline
+import androidx.media3.common.Tracks
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.ui.PlayerControlView
+import androidx.media3.ui.PlayerView
+import com.google.android.gms.cast.Cast
 import com.google.android.gms.cast.framework.CastContext
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
@@ -38,10 +47,11 @@ import com.pallycon.widevine.model.PallyConEventListener
  * Manages players and an internal media queue for the demo app.
  *
  */
+@UnstableApi @OptIn(UnstableApi::class)
 internal class PlayerManager(
     context: Context,
     listener: Listener,
-    playerView: StyledPlayerView,
+    playerView: PlayerView,
 ) :
     Listener, SessionAvailabilityListener {
     /** Listener for events.  */
@@ -58,7 +68,7 @@ internal class PlayerManager(
     }
 
     private val context: Context
-    private val playerView: StyledPlayerView
+    private val playerView: PlayerView
     private var localPlayer: Player? = null
     private var castPlayer: CastPlayer? = null
     private val mediaQueue: ArrayList<MediaItem>
@@ -249,13 +259,13 @@ internal class PlayerManager(
     }
 
     // Player.Listener implementation.
-    override fun onPlaybackStateChanged(playbackState: @State Int) {
+    override fun onPlaybackStateChanged(playbackState: @Player.State Int) {
         updateCurrentItemIndex()
     }
 
     override fun onPositionDiscontinuity(
-        oldPosition: PositionInfo,
-        newPosition: PositionInfo,
+        oldPosition: Player.PositionInfo,
+        newPosition: Player.PositionInfo,
         reason: Int
     ) {
         updateCurrentItemIndex()
@@ -314,7 +324,7 @@ internal class PlayerManager(
                 null
             )
         } else { // currentPlayer == localPlayer
-            playerView.controllerShowTimeoutMs = StyledPlayerControlView.DEFAULT_SHOW_TIMEOUT_MS
+            playerView.controllerShowTimeoutMs = PlayerControlView.DEFAULT_SHOW_TIMEOUT_MS
             playerView.defaultArtwork = null
         }
 

@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.media3.common.util.Util
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.android.exoplayer2.util.Util
 import com.pallycon.castsample.databinding.ActivityMainBinding
 import com.pallycon.castsample.dialog.TrackSelectDialog
 import com.pallycon.widevine.exception.PallyConException
@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             val data = contents.find { it.content.url == currentUrl }
             data?.let {
                 val index = contents.indexOf(it)
+                prepareForIndex(index)
                 contents[index].subTitle = "Not"
                 contents[index].status = DownloadState.NOT
                 adapter?.notifyItemChanged(index)
