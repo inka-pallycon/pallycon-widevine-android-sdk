@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     val contents = mutableListOf<ContentData>()
 
     private val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
-        override fun onCompleted(currentUrl: String?) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onCompleted(contentData: com.pallycon.widevine.model.ContentData) {
+            val data = contents.find { it.content == contentData }
             data?.let {
                 val index = contents.indexOf(it)
                 contents[index].subTitle = "COMPLETED"
@@ -45,8 +45,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onProgress(currentUrl: String?, percent: Float, downloadedBytes: Long) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onProgress(
+            contentData: com.pallycon.widevine.model.ContentData,
+            percent: Float,
+            downloadedBytes: Long
+        ) {
+            val data = contents.find { it.content == contentData }
             data?.let {
                 val index = contents.indexOf(it)
                 contents[index].subTitle = "Downloading.. %" + String.format("%.0f", percent)
@@ -57,8 +61,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onStopped(currentUrl: String?) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onStopped(contentData: com.pallycon.widevine.model.ContentData) {
+            val data = contents.find { it.content == contentData }
             data?.let {
                 val index = contents.indexOf(it)
                 contents[index].subTitle = "Stoped"
@@ -67,8 +71,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onRestarting(currentUrl: String?) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onRestarting(contentData: com.pallycon.widevine.model.ContentData) {
+            val data = contents.find { it.content == contentData }
             data?.let {
                 val index = contents.indexOf(it)
                 contents[index].subTitle = "Restart"
@@ -77,8 +81,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onRemoved(currentUrl: String?) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onRemoved(contentData: com.pallycon.widevine.model.ContentData) {
+            val data = contents.find { it.content == contentData }
             data?.let {
                 val index = contents.indexOf(it)
                 prepareForIndex(index)
@@ -88,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onPaused(currentUrl: String?) {
+        override fun onPaused(contentData: com.pallycon.widevine.model.ContentData) {
             contents.forEachIndexed { index, contentData ->
                 var state = contents[index].wvSDK.getDownloadState()
                 if (state == DownloadState.DOWNLOADING) {
@@ -99,8 +103,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConException?) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onFailed(
+            contentData: com.pallycon.widevine.model.ContentData,
+            e: PallyConException?
+        ) {
+            val data = contents.find { it.content == contentData }
             var subTitle: String
             when (e) {
                 is PallyConException.DrmException -> {
@@ -133,8 +140,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConLicenseServerException?) {
-            val data = contents.find { it.content.url == currentUrl }
+        override fun onFailed(
+            contentData: com.pallycon.widevine.model.ContentData,
+            e: PallyConLicenseServerException?
+        ) {
+            val data = contents.find { it.content == contentData }
             data?.let {
                 val index = contents.indexOf(it)
                 contents[index].subTitle = "Failed"
@@ -216,6 +226,7 @@ class MainActivity : AppCompatActivity() {
         val fi = this.getExternalFilesDir(null) ?: this.filesDir
         val localPath = File(fi, "downloads").toString()
 
+        PallyConWvSDK.setDownloadDirectory(this, localPath)
         val config = PallyConDrmConfigration(
             "DEMO",
             "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ=="
@@ -224,7 +235,6 @@ class MainActivity : AppCompatActivity() {
         val data = PallyConData(
             contentId = "demo-bbb-simple",
             url = "https://contents.pallycon.com/DEMO/app/big_buck_bunny/dash/stream.mpd",
-            localPath = localPath,
             drmConfig = config,
         )
         val wvSDK = PallyConWvSDK.createPallyConWvSDK(
@@ -255,7 +265,6 @@ class MainActivity : AppCompatActivity() {
         val data2 = PallyConData(
             contentId = "TestRunner_DASH",
             url = "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/dash/stream.mpd",
-            localPath = localPath,
             drmConfig = config2
         )
         val wvSDK2 = PallyConWvSDK.createPallyConWvSDK(
@@ -283,7 +292,6 @@ class MainActivity : AppCompatActivity() {
         val data3 = PallyConData(
             contentId = "TestRunner_HLS",
             url = "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/cmaf/master.m3u8",
-            localPath = localPath,
             drmConfig = config3,
         )
         val wvSDK3 = PallyConWvSDK.createPallyConWvSDK(

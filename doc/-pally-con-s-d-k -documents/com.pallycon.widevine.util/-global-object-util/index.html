@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>GlobalObjectUtil</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
     if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -18,12 +19,13 @@
         }
     }
     </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
 <link href="../../../styles/style.css" rel="Stylesheet">
-<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
@@ -32,262 +34,293 @@
 <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
-<div class="navigation-wrapper" id="navigation-wrapper">
-    <div id="leftToggler"><span class="icon-toggler"></span></div>
-    <div class="library-name">
-            <a href="../../../index.html">
-                    <span>PallyConSDK Documents</span>
-            </a>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            PallyConSDK Documents
+                    </a>
+            </div>
+            <div class="library-version">
+4.2.0            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":widevine:dokkaHtml/release">androidJvm</button>
+        </div>
     </div>
-    <div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
     </div>
-    <div class="pull-right d-flex">
-        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
-        <div id="searchBar"></div>
-    </div>
-</div>
-<div id="container">
-    <div id="leftColumn">
-        <div id="sideMenu"></div>
-    </div>
-    <div id="main">
-<div class="main-content" id="content" pageIds="PallyConSDK Documents::com.pallycon.widevine.util/GlobalObjectUtil///PointingToDeclaration//-905191249">
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="PallyConSDK Documents::com.pallycon.widevine.util/GlobalObjectUtil///PointingToDeclaration//-905191249">
   <div class="breadcrumbs"><a href="../../../index.html">PallyConSDK Documents</a><span class="delimiter">/</span><a href="../index.html">com.pallycon.widevine.util</a><span class="delimiter">/</span><span class="current">GlobalObjectUtil</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Global</span><wbr></wbr><span>Object</span><wbr></wbr><span><span>Util</span></span></h1>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="index.html">GlobalObjectUtil</a></div></div></div>
   </div>
   <div class="tabbedcontent">
-    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
-      <h2 class="tabbedcontent">Constructors</h2>
-      <div class="table" data-togglable="Constructors"><a data-name="-839035823%2FConstructors%2F-905191249" anchor-label="GlobalObjectUtil" id="-839035823%2FConstructors%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue TabbedContent">
-            <div class=""><span class="inline-flex">
-                <div><a href="-global-object-util.html"><span>Global</span><wbr></wbr><span>Object</span><wbr></wbr><span><span>Util</span></span></a></div>
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-839035823%2FConstructors%2F-905191249" anchor-label="GlobalObjectUtil" id="-839035823%2FConstructors%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-global-object-util.html"><span>Global</span><wbr></wbr><span>Object</span><wbr></wbr><span><span>Util</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-839035823%2FConstructors%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GlobalObjectUtil</a> <a href="-global-object-util.html"><span class="token function">GlobalObjectUtil</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GlobalObjectUtil</a> <a href="-global-object-util.html"><span class="token function">GlobalObjectUtil</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Types</h2>
-      <div class="table" data-togglable="Types"><a data-name="1955493868%2FClasslikes%2F-905191249" anchor-label="Companion" id="1955493868%2FClasslikes%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1955493868%2FClasslikes%2F-905191249" anchor-label="Companion" id="1955493868%2FClasslikes%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1955493868%2FClasslikes%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">class </span><a href="-companion/index.html">Companion</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">class </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Functions</h2>
-      <div class="table" data-togglable="Functions"><a data-name="-1588082057%2FFunctions%2F-905191249" anchor-label="createLicenseCipher" id="-1588082057%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="create-license-cipher.html"><span>create</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Cipher</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1588082057%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="create-license-cipher.html"><span class="token function">createLicenseCipher</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a> context<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> licenseCipherPath</span></span><span class="token punctuation">)</span></div></div></div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-425514309%2FProperties%2F-905191249" anchor-label="Companion" id="-425514309%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-425514309%2FProperties%2F-905191249"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-425514309%2FProperties%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword">static </span><a href="-companion/index.html">GlobalObjectUtil.Companion</a> <a href="index.html#-425514309%2FProperties%2F-905191249">Companion</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-<a data-name="-1504204352%2FFunctions%2F-905191249" anchor-label="doCipher" id="-1504204352%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="do-cipher.html"><span>do</span><wbr></wbr><span><span>Cipher</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1504204352%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="do-cipher.html"><span class="token function">doCipher</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a> input<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a> output</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-893030753%2FFunctions%2F-905191249" anchor-label="getLicenseCipher" id="-893030753%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-license-cipher.html"><span>get</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Cipher</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-893030753%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Object.html">Object</a> <a href="get-license-cipher.html"><span class="token function">getLicenseCipher</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-454013072%2FFunctions%2F-905191249" anchor-label="getPallyConCallback" id="-454013072%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-pally-con-callback.html"><span>get</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Callback</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-454013072%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> <a href="get-pally-con-callback.html"><span class="token function">getPallyConCallback</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="1636674743%2FFunctions%2F-905191249" anchor-label="getPallyConEventListener" id="1636674743%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-pally-con-event-listener.html"><span>get</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Listener</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1636674743%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> <a href="get-pally-con-event-listener.html"><span class="token function">getPallyConEventListener</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-58786541%2FFunctions%2F-905191249" anchor-label="setCallback" id="-58786541%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="set-callback.html"><span>set</span><wbr></wbr><span><span>Callback</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-58786541%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-callback.html"><span class="token function">setCallback</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> callback</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-1473113993%2FFunctions%2F-905191249" anchor-label="setLicenseCipher" id="-1473113993%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="set-license-cipher.html"><span>set</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Cipher</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1473113993%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-license-cipher.html"><span class="token function">setLicenseCipher</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Object.html">Object</a> licenseCipher</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-987459787%2FFunctions%2F-905191249" anchor-label="setListener" id="-987459787%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="set-listener.html"><span>set</span><wbr></wbr><span><span>Listener</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-987459787%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-listener.html"><span class="token function">setListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> eventListener</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="800616109%2FFunctions%2F-905191249" anchor-label="setPallyConCallback" id="800616109%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="set-pally-con-callback.html"><span>set</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Callback</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="800616109%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-pally-con-callback.html"><span class="token function">setPallyConCallback</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> pallyConCallback</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-1513089847%2FFunctions%2F-905191249" anchor-label="setPallyConEventListener" id="-1513089847%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="set-pally-con-event-listener.html"><span>set</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Listener</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1513089847%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-pally-con-event-listener.html"><span class="token function">setPallyConEventListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> pallyConEventListener</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="">Properties</h2>
-      <div class="table" data-togglable="Properties"><a data-name="-1398437255%2FProperties%2F-905191249" anchor-label="licenseCipher" id="-1398437255%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#-1398437255%2FProperties%2F-905191249"><span>license</span><wbr></wbr><span><span>Cipher</span></span></a></div>
+<a data-name="-1398437255%2FProperties%2F-905191249" anchor-label="licenseCipher" id="-1398437255%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1398437255%2FProperties%2F-905191249"><span>license</span><wbr></wbr><span><span>Cipher</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1398437255%2FProperties%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><a data-name="-1398437255%2FProperties%2F-905191249" anchor-label="licenseCipher" id="-1398437255%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Object.html">Object</a> <a href="index.html#-1398437255%2FProperties%2F-905191249">licenseCipher</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Object.html">Object</a> <a href="index.html#-1398437255%2FProperties%2F-905191249">licenseCipher</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="1136225622%2FProperties%2F-905191249" anchor-label="pallyConCallback" id="1136225622%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#1136225622%2FProperties%2F-905191249"><span>pally</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Callback</span></span></a></div>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1136225622%2FProperties%2F-905191249"><span>pally</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Callback</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1136225622%2FProperties%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><a data-name="1136225622%2FProperties%2F-905191249" anchor-label="pallyConCallback" id="1136225622%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> <a href="index.html#1136225622%2FProperties%2F-905191249">pallyConCallback</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> <a href="index.html#1136225622%2FProperties%2F-905191249">pallyConCallback</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-580301167%2FProperties%2F-905191249" anchor-label="pallyConEventListener" id="-580301167%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-580301167%2FProperties%2F-905191249"><span>pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-580301167%2FProperties%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> <a href="index.html#-580301167%2FProperties%2F-905191249">pallyConEventListener</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-<a data-name="-580301167%2FProperties%2F-905191249" anchor-label="pallyConEventListener" id="-580301167%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#-580301167%2FProperties%2F-905191249"><span>pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Listener</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-580301167%2FProperties%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><a data-name="-580301167%2FProperties%2F-905191249" anchor-label="pallyConEventListener" id="-580301167%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> <a href="index.html#-580301167%2FProperties%2F-905191249">pallyConEventListener</a></div></div></div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1588082057%2FFunctions%2F-905191249" anchor-label="createLicenseCipher" id="-1588082057%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-license-cipher.html"><span>create</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Cipher</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1588082057%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="create-license-cipher.html"><span class="token function">createLicenseCipher</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a> context<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> licenseCipherPath</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1504204352%2FFunctions%2F-905191249" anchor-label="doCipher" id="-1504204352%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="do-cipher.html"><span>do</span><wbr></wbr><span><span>Cipher</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1504204352%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="do-cipher.html"><span class="token function">doCipher</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a> input<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a> output</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-893030753%2FFunctions%2F-905191249" anchor-label="getLicenseCipher" id="-893030753%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-license-cipher.html"><span>get</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Cipher</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-893030753%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Object.html">Object</a> <a href="get-license-cipher.html"><span class="token function">getLicenseCipher</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-454013072%2FFunctions%2F-905191249" anchor-label="getPallyConCallback" id="-454013072%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-pally-con-callback.html"><span>get</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-454013072%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> <a href="get-pally-con-callback.html"><span class="token function">getPallyConCallback</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1636674743%2FFunctions%2F-905191249" anchor-label="getPallyConEventListener" id="1636674743%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-pally-con-event-listener.html"><span>get</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1636674743%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> <a href="get-pally-con-event-listener.html"><span class="token function">getPallyConEventListener</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-58786541%2FFunctions%2F-905191249" anchor-label="setCallback" id="-58786541%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-callback.html"><span>set</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-58786541%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-callback.html"><span class="token function">setCallback</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> callback</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1473113993%2FFunctions%2F-905191249" anchor-label="setLicenseCipher" id="-1473113993%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-license-cipher.html"><span>set</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Cipher</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1473113993%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-license-cipher.html"><span class="token function">setLicenseCipher</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Object.html">Object</a> licenseCipher</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-987459787%2FFunctions%2F-905191249" anchor-label="setListener" id="-987459787%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-listener.html"><span>set</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-987459787%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-listener.html"><span class="token function">setListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> eventListener</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="800616109%2FFunctions%2F-905191249" anchor-label="setPallyConCallback" id="800616109%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-pally-con-callback.html"><span>set</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="800616109%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-pally-con-callback.html"><span class="token function">setPallyConCallback</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-callback/index.html">PallyConCallback</a> pallyConCallback</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1513089847%2FFunctions%2F-905191249" anchor-label="setPallyConEventListener" id="-1513089847%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-pally-con-event-listener.html"><span>set</span><wbr></wbr><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Event</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1513089847%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-pally-con-event-listener.html"><span class="token function">setPallyConEventListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.pallycon.widevine.model/-pally-con-event-listener/index.html">PallyConEventListener</a> pallyConEventListener</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
               </div>
             </div>
           </div>
@@ -301,7 +334,8 @@
                 class="pull-right"><span>Generated by </span><a
                 href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
       </div>
+            </div>
+        </div>
     </div>
-</div>
 </body>
 </html>

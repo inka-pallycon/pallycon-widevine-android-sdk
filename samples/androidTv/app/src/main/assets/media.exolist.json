@@ -1,0 +1,32 @@
+[
+  {
+    "type" : "streaming",
+    "uri": "https://contents.pallycon.com/DEMO/app/big_buck_bunny/dash/stream.mpd",
+    "name": "BigBuckBunny",
+    "drmSchemeUuid": "widevine",
+    "drmLicenseUrl": "https://license-global.pallycon.com/ri/licenseManager.do",
+    "cid": "demo-bbb-simple",
+    "token": "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ==",
+    "category" : "Streaming",
+    "bgImageUrl" : "https://contents.pallycon.com/DEMO/app/BigBuckBunny.png",
+    "cardImageUrl" : "https://contents.pallycon.com/DEMO/app/BigBuckBunny.png",
+    "customData" : "",
+    "thumbnail": "",
+    "multiSession": false
+  },
+  {
+    "type" : "streaming",
+    "uri": "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/dash/stream.mpd",
+    "name": "Sintel",
+    "drmSchemeUuid": "widevine",
+    "drmLicenseUrl": "https://license-global.pallycon.com/ri/licenseManager.do",
+    "cid": "TestRunner_User",
+    "token": "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJwYWxseWNvbiIsImRybV90eXBlIjoid2lkZXZpbmUiLCJzaXRlX2lkIjoiREVNTyIsImhhc2giOiJkNTBDSVVUS1RwRDl6T3dGaU9DSysrXC83Q3pLOStZN3NkcHFhUUppdDJWQT0iLCJjaWQiOiJUZXN0UnVubmVyIiwicG9saWN5IjoiOVdxSVdrZGhweFZHSzhQU0lZY25Kc2N2dUE5c3hndWJMc2QrYWp1XC9ib21RWlBicUkreGFlWWZRb2Nja3Z1RWZBYXFkVzVoWGdKTmdjU1MzZlM3bzhNczB3QXNuN05UbmJIUmtwWDFDeTEyTkhwMlZPN1pMeFJvZDhVdkUwZnBFbUpYOUpuRDh6ZktkdE9RWk9UYXljK280RzNCT0xmU29OaFpWbkIwUGxEbW1rVk5jbXpndko2YloxdXBudjFcLzJFM2lXZXd3eklTNFVOQlhTS21zVUFCZnBRQjg4Q2VJYlZSM0hKZWJvcEpwZG1DTFFvRmtCT09DQU9qWElBOUVHIiwidGltZXN0YW1wIjoiMjAyMi0xMC0xMVQwNzowMToxN1oifQ==",
+    "category" : "Streaming",
+    "bgImageUrl" : "https://contents.pallycon.com/DEMO/app/sintel.jpeg",
+    "cardImageUrl" : "https://contents.pallycon.com/DEMO/app/sintel.jpeg",
+    "customData" : "",
+    "thumbnail": "",
+    "multiSession": false
+  }
+]

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.media3.common.C;
@@ -51,43 +52,43 @@ public class MainActivity extends AppCompatActivity {
 
     ) {
         @Override
-        public void onFailed(@Nullable String currentUrl, @Nullable PallyConException e) {
-            Toast.makeText(getApplicationContext(), e.getMsg(), Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onFailed(@Nullable String currentUrl, @Nullable PallyConLicenseServerException e) {
+        public void onFailed(@NonNull ContentData contentData, @Nullable PallyConLicenseServerException e) {
             String message = String.format("%d, %s", e.errorCode(), e.body());
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         }
 
         @Override
-        public void onPaused(@Nullable String currentUrl) {
+        public void onFailed(@NonNull ContentData contentData, @Nullable PallyConException e) {
+            Toast.makeText(getApplicationContext(), e.getMsg(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onPaused(@NonNull ContentData contentData) {
 
         }
 
         @Override
-        public void onRemoved(@Nullable String currentUrl) {
+        public void onRemoved(@NonNull ContentData contentData) {
 
         }
 
         @Override
-        public void onRestarting(@Nullable String currentUrl) {
+        public void onRestarting(@NonNull ContentData contentData) {
 
         }
 
         @Override
-        public void onStopped(@Nullable String currentUrl) {
+        public void onStopped(@NonNull ContentData contentData) {
 
         }
 
         @Override
-        public void onProgress(@Nullable String currentUrl, float percent, long downloadedBytes) {
+        public void onProgress(@NonNull ContentData contentData, float percent, long downloadedBytes) {
 
         }
 
         @Override
-        public void onCompleted(@Nullable String currentUrl) {
+        public void onCompleted(@NonNull ContentData contentData) {
 
         }
     };
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         );
         ContentData content = new ContentData(
                 "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/dash/stream.mpd",
-                "",
                 config
         );
 
@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
 
         ContentData content2 = new ContentData(
                 "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_MULTITRACK/dash/stream.mpd",
-                "",
                 config2
         );
 

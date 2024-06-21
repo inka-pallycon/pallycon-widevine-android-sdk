@@ -14,8 +14,8 @@
 buildscript {
     ext.minSdkVersion = 21
     ext.targetSdkVersion = 33
-    ext.dokkaVersion = '1.7.20'
-    ext.gradleVersion = '7.4.2'
+    ext.dokkaVersion = '1.9.20'
+    ext.gradleVersion = '8.2.1'
     ext.kotlinVersion = '1.7.10'
     ext.nexusVersion = '1.2.0'
 

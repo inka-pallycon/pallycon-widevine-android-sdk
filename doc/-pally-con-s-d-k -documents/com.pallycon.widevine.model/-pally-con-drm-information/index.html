@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>PallyConDrmInformation</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
     if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -18,12 +19,13 @@
         }
     }
     </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
 <link href="../../../styles/style.css" rel="Stylesheet">
-<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
@@ -32,140 +34,154 @@
 <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
-<div class="navigation-wrapper" id="navigation-wrapper">
-    <div id="leftToggler"><span class="icon-toggler"></span></div>
-    <div class="library-name">
-            <a href="../../../index.html">
-                    <span>PallyConSDK Documents</span>
-            </a>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            PallyConSDK Documents
+                    </a>
+            </div>
+            <div class="library-version">
+4.2.0            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":widevine:dokkaHtml/release">androidJvm</button>
+        </div>
     </div>
-    <div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
     </div>
-    <div class="pull-right d-flex">
-        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
-        <div id="searchBar"></div>
-    </div>
-</div>
-<div id="container">
-    <div id="leftColumn">
-        <div id="sideMenu"></div>
-    </div>
-    <div id="main">
-<div class="main-content" id="content" pageIds="PallyConSDK Documents::com.pallycon.widevine.model/PallyConDrmInformation///PointingToDeclaration//-905191249">
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="PallyConSDK Documents::com.pallycon.widevine.model/PallyConDrmInformation///PointingToDeclaration//-905191249">
   <div class="breadcrumbs"><a href="../../../index.html">PallyConSDK Documents</a><span class="delimiter">/</span><a href="../index.html">com.pallycon.widevine.model</a><span class="delimiter">/</span><span class="current">PallyConDrmInformation</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Drm</span><wbr></wbr><span><span>Information</span></span></h1>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="index.html">PallyConDrmInformation</a><span class="token keyword"> implements </span><a href="https://developer.android.com/reference/kotlin/android/os/Parcelable.html">Parcelable</a></div></div></div>
   </div>
   <div class="tabbedcontent">
-    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
-      <h2 class="tabbedcontent">Constructors</h2>
-      <div class="table" data-togglable="Constructors"><a data-name="-567225195%2FConstructors%2F-905191249" anchor-label="PallyConDrmInformation" id="-567225195%2FConstructors%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue TabbedContent">
-            <div class=""><span class="inline-flex">
-                <div><a href="-pally-con-drm-information.html"><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Drm</span><wbr></wbr><span><span>Information</span></span></a></div>
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-567225195%2FConstructors%2F-905191249" anchor-label="PallyConDrmInformation" id="-567225195%2FConstructors%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-pally-con-drm-information.html"><span>Pally</span><wbr></wbr><span>Con</span><wbr></wbr><span>Drm</span><wbr></wbr><span><span>Information</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-567225195%2FConstructors%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">PallyConDrmInformation</a> <a href="-pally-con-drm-information.html"><span class="token function">PallyConDrmInformation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> licenseDuration<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> playbackDuration</span></span><span class="token punctuation">)</span></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">PallyConDrmInformation</a> <a href="-pally-con-drm-information.html"><span class="token function">PallyConDrmInformation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> licenseDuration<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> playbackDuration</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Functions</h2>
-      <div class="table" data-togglable="Functions"><a data-name="-1578325224%2FFunctions%2F-905191249" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#-1578325224%2FFunctions%2F-905191249"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> <a href="index.html#-1578325224%2FFunctions%2F-905191249"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-182235962%2FFunctions%2F-905191249" anchor-label="getLicenseDuration" id="-182235962%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-license-duration.html"><span>get</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Duration</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-182235962%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="get-license-duration.html"><span class="token function">getLicenseDuration</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The remaining license duration.</p></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-515299024%2FFunctions%2F-905191249" anchor-label="getPlaybackDuration" id="-515299024%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-playback-duration.html"><span>get</span><wbr></wbr><span>Playback</span><wbr></wbr><span><span>Duration</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-515299024%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="get-playback-duration.html"><span class="token function">getPlaybackDuration</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The remaining playback duration.</p></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-<a data-name="-1754457655%2FFunctions%2F-905191249" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#-1754457655%2FFunctions%2F-905191249"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#-1754457655%2FFunctions%2F-905191249"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a> p0<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> p1</span></span><span class="token punctuation">)</span></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="">Properties</h2>
-      <div class="table" data-togglable="Properties"><a data-name="-516007296%2FProperties%2F-905191249" anchor-label="licenseDuration" id="-516007296%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#-516007296%2FProperties%2F-905191249"><span>license</span><wbr></wbr><span><span>Duration</span></span></a></div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-516007296%2FProperties%2F-905191249" anchor-label="licenseDuration" id="-516007296%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-516007296%2FProperties%2F-905191249"><span>license</span><wbr></wbr><span><span>Duration</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-516007296%2FProperties%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><a data-name="-516007296%2FProperties%2F-905191249" anchor-label="licenseDuration" id="-516007296%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="index.html#-516007296%2FProperties%2F-905191249">licenseDuration</a></div><div class="brief "><a data-name="-516007296%2FProperties%2F-905191249" anchor-label="licenseDuration" id="-516007296%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><p class="paragraph">The remaining license duration.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="index.html#-516007296%2FProperties%2F-905191249">licenseDuration</a></div><div class="brief "><p class="paragraph">The remaining license duration.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2022691510%2FProperties%2F-905191249" anchor-label="playbackDuration" id="2022691510%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#2022691510%2FProperties%2F-905191249"><span>playback</span><wbr></wbr><span><span>Duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2022691510%2FProperties%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="index.html#2022691510%2FProperties%2F-905191249">playbackDuration</a></div><div class="brief "><p class="paragraph">The remaining playback duration.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-<a data-name="2022691510%2FProperties%2F-905191249" anchor-label="playbackDuration" id="2022691510%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="index.html#2022691510%2FProperties%2F-905191249"><span>playback</span><wbr></wbr><span><span>Duration</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2022691510%2FProperties%2F-905191249"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><a data-name="2022691510%2FProperties%2F-905191249" anchor-label="playbackDuration" id="2022691510%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="index.html#2022691510%2FProperties%2F-905191249">playbackDuration</a></div><div class="brief "><a data-name="2022691510%2FProperties%2F-905191249" anchor-label="playbackDuration" id="2022691510%2FProperties%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a><p class="paragraph">The remaining playback duration.</p></div></div></div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1578325224%2FFunctions%2F-905191249" anchor-label="describeContents" id="-1578325224%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1578325224%2FFunctions%2F-905191249"><span>describe</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578325224%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> <a href="index.html#-1578325224%2FFunctions%2F-905191249"><span class="token function">describeContents</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-182235962%2FFunctions%2F-905191249" anchor-label="getLicenseDuration" id="-182235962%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-license-duration.html"><span>get</span><wbr></wbr><span>License</span><wbr></wbr><span><span>Duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-182235962%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="get-license-duration.html"><span class="token function">getLicenseDuration</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The remaining license duration.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-515299024%2FFunctions%2F-905191249" anchor-label="getPlaybackDuration" id="-515299024%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-playback-duration.html"><span>get</span><wbr></wbr><span>Playback</span><wbr></wbr><span><span>Duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-515299024%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Long.html">Long</a> <a href="get-playback-duration.html"><span class="token function">getPlaybackDuration</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The remaining playback duration.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1754457655%2FFunctions%2F-905191249" anchor-label="writeToParcel" id="-1754457655%2FFunctions%2F-905191249" data-filterable-set=":widevine:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":widevine:dokkaHtml/release" data-filterable-set=":widevine:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1754457655%2FFunctions%2F-905191249"><span>write</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Parcel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754457655%2FFunctions%2F-905191249"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":widevine:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#-1754457655%2FFunctions%2F-905191249"><span class="token function">writeToParcel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/android/os/Parcel.html">Parcel</a> p0<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> p1</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
               </div>
             </div>
           </div>
@@ -179,7 +195,8 @@
                 class="pull-right"><span>Generated by </span><a
                 href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
       </div>
+            </div>
+        </div>
     </div>
-</div>
 </body>
 </html>

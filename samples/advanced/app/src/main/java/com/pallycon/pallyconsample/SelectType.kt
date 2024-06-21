@@ -4,7 +4,6 @@ enum class SelectType {
     Play,
     Menu,
     Download,
-    Pause,
+    Stop,
     Remove,
-    Resume
 }

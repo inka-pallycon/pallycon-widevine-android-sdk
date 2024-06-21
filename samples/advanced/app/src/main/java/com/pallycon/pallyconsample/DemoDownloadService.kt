@@ -1,10 +1,9 @@
 package com.pallycon.pallyconsample
 
 import android.app.Notification
-import android.app.Service
 import android.content.Context
 import android.content.Intent
-import androidx.media3.common.util.Log
+import android.os.Build
 import androidx.media3.common.util.NotificationUtil
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.offline.Download
@@ -14,17 +13,20 @@ import androidx.media3.exoplayer.offline.DownloadService
 import androidx.media3.exoplayer.scheduler.PlatformScheduler
 import androidx.media3.exoplayer.scheduler.Scheduler
 import com.pallycon.widevine.R
+import com.pallycon.widevine.model.ContentData
+import com.pallycon.widevine.service.PallyConDownloadService
 
 class DemoDownloadService constructor(
     private val JOB_ID: Int = 1,
     private val FOREGROUND_NOTIFICATION_ID: Int = 1,
-) : DownloadService(
+) : PallyConDownloadService(
     FOREGROUND_NOTIFICATION_ID,
     DEFAULT_FOREGROUND_NOTIFICATION_UPDATE_INTERVAL,
     ObjectSingleton.getInstance().downloadChannel,
     R.string.exo_download_notification_channel_name,
     0
 ) {
+
     override fun onDestroy() {
         clearDownloadManagerHelpers()
         super.onDestroy()

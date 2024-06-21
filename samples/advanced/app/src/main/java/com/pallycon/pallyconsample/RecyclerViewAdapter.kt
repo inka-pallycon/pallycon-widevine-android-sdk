@@ -11,7 +11,7 @@ class RecyclerViewAdapter(
     private val callback: ((ContentData, SelectType) -> Unit)?
 ): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
-    var datalist = mutableListOf<ContentData>()
+    var dataList = mutableListOf<ContentData>()
     inner class ViewHolder(private val binding: ItemListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(content: ContentData){
             binding.root.setOnClickListener {
@@ -26,40 +26,36 @@ class RecyclerViewAdapter(
             binding.txtTitle.text = content.title
 
             binding.downloadButton.setOnClickListener {
-                if (content.status == DownloadState.PAUSED) {
-                    callback?.invoke(content, SelectType.Resume)
-                } else {
-                    callback?.invoke(content, SelectType.Download)
-                }
+                callback?.invoke(content, SelectType.Download)
             }
 
             binding.removeButton.setOnClickListener {
                 callback?.invoke(content, SelectType.Remove)
             }
 
-            binding.pauseButton.setOnClickListener {
-                callback?.invoke(content, SelectType.Pause)
+            binding.stopButton.setOnClickListener {
+                callback?.invoke(content, SelectType.Stop)
             }
 
             if (content.downloadTracks == null && content.status == DownloadState.NOT) {
                 binding.txtStatus.text = "preparing.."
                 binding.downloadButton.visibility = View.INVISIBLE
                 binding.removeButton.visibility = View.INVISIBLE
-                binding.pauseButton.visibility = View.INVISIBLE
+                binding.stopButton.visibility = View.INVISIBLE
             } else {
                 binding.txtStatus.text = content.subTitle
                 if (content.status == DownloadState.COMPLETED) {
                     binding.downloadButton.visibility = View.INVISIBLE
                     binding.removeButton.visibility = View.VISIBLE
-                    binding.pauseButton.visibility = View.INVISIBLE
+                    binding.stopButton.visibility = View.INVISIBLE
                 } else if (content.status == DownloadState.DOWNLOADING) {
                     binding.downloadButton.visibility = View.INVISIBLE
                     binding.removeButton.visibility = View.INVISIBLE
-                    binding.pauseButton.visibility = View.VISIBLE
+                    binding.stopButton.visibility = View.VISIBLE
                 } else {
                     binding.downloadButton.visibility = View.VISIBLE
                     binding.removeButton.visibility = View.INVISIBLE
-                    binding.pauseButton.visibility = View.INVISIBLE
+                    binding.stopButton.visibility = View.INVISIBLE
                 }
             }
         }
@@ -70,9 +66,16 @@ class RecyclerViewAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = datalist.size
+    override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datalist[position])
+        holder.bind(dataList[position])
+    }
+
+    fun updateItem(index: Int, content: ContentData) {
+        if (index in dataList.indices) {
+            dataList[index] = content
+            notifyItemChanged(index)
+        }
     }
 }

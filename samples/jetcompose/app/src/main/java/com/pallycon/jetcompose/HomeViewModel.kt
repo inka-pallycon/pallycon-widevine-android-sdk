@@ -30,13 +30,17 @@ class HomeViewModel : ViewModel() {
     val notificationPermissionToastShown = MutableStateFlow(false)
 
     private val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
-        override fun onCompleted(currentUrl: String?) {
-            updateContentDataFromListners(currentUrl, "COMPLETED", DownloadState.COMPLETED)
+        override fun onCompleted(contentData: com.pallycon.widevine.model.ContentData) {
+            updateContentDataFromListners(contentData.url, "COMPLETED", DownloadState.COMPLETED)
         }
 
-        override fun onProgress(currentUrl: String?, percent: Float, downloadedBytes: Long) {
+        override fun onProgress(
+            contentData: com.pallycon.widevine.model.ContentData,
+            percent: Float,
+            downloadedBytes: Long
+        ) {
             val copyList = contents.value.toMutableList()
-            val index = copyList.indexOfFirst { it.content.url == currentUrl }
+            val index = copyList.indexOfFirst { it.content == contentData }
             if (index != -1) {
                 var status = copyList[index].status
                 if (copyList[index].status != DownloadState.COMPLETED) {
@@ -50,19 +54,19 @@ class HomeViewModel : ViewModel() {
             }
         }
 
-        override fun onStopped(currentUrl: String?) {
-            updateContentDataFromListners(currentUrl, "Stoped", DownloadState.STOPPED)
+        override fun onStopped(contentData: com.pallycon.widevine.model.ContentData) {
+            updateContentDataFromListners(contentData.url, "Stoped", DownloadState.STOPPED)
         }
 
-        override fun onRestarting(currentUrl: String?) {
-            updateContentDataFromListners(currentUrl, "Restart", DownloadState.RESTARTING)
+        override fun onRestarting(contentData: com.pallycon.widevine.model.ContentData) {
+            updateContentDataFromListners(contentData.url, "Restart", DownloadState.RESTARTING)
         }
 
-        override fun onRemoved(currentUrl: String?) {
-            updateContentDataFromListners(currentUrl, "Not", DownloadState.NOT)
+        override fun onRemoved(contentData: com.pallycon.widevine.model.ContentData) {
+            updateContentDataFromListners(contentData.url, "Not", DownloadState.NOT)
         }
 
-        override fun onPaused(currentUrl: String?) {
+        override fun onPaused(contentData: com.pallycon.widevine.model.ContentData) {
             val copyList = contents.value.toMutableList()
             copyList.forEachIndexed { index, contentData ->
                 var state = copyList[index].wvSDK.getDownloadState()
@@ -76,7 +80,10 @@ class HomeViewModel : ViewModel() {
             modifyContentDataList(copyList)
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConException?) {
+        override fun onFailed(
+            contentData: com.pallycon.widevine.model.ContentData,
+            e: PallyConException?
+        ) {
             var subTitle: String
             when (e) {
                 is PallyConException.DrmException -> {
@@ -99,7 +106,7 @@ class HomeViewModel : ViewModel() {
                     subTitle = "Failed"
                 }
             }
-            updateContentDataFromListners(currentUrl, subTitle, DownloadState.FAILED)
+            updateContentDataFromListners(contentData.url, subTitle, DownloadState.FAILED)
 
             e?.let { e ->
                 scope.launch(Dispatchers.Main) {
@@ -110,8 +117,11 @@ class HomeViewModel : ViewModel() {
             }
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConLicenseServerException?) {
-            updateContentDataFromListners(currentUrl, "Failed", DownloadState.FAILED)
+        override fun onFailed(
+            contentData: com.pallycon.widevine.model.ContentData,
+            e: PallyConLicenseServerException?
+        ) {
+            updateContentDataFromListners(contentData.url, "Failed", DownloadState.FAILED)
 
             if (e != null && e.errorCode() != 7127) {
                 scope.launch(Dispatchers.Main) {

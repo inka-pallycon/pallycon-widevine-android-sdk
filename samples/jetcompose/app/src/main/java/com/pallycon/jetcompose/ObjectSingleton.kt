@@ -44,6 +44,7 @@ import java.io.File
         val fi = context.getExternalFilesDir(null) ?: context.filesDir
         val localPath = File(fi, "downloads").toString()
 
+        PallyConWvSDK.setDownloadDirectory(context, localPath)
         val config = PallyConDrmConfigration(
             "DEMO",
             "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ=="
@@ -51,7 +52,6 @@ import java.io.File
         val data = com.pallycon.widevine.model.ContentData(
             contentId = "demo-bbb-simple",
             url = "https://contents.pallycon.com/DEMO/app/big_buck_bunny/dash/stream.mpd",
-            localPath = localPath,
             drmConfig = config,
             cookie = null
         )
@@ -83,7 +83,6 @@ import java.io.File
         val data2 = com.pallycon.widevine.model.ContentData(
             contentId = "TestRunner_DASH",
             url = "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/dash/stream.mpd",
-            localPath = localPath,
             drmConfig = config2
         )
         val wvSDK2 = PallyConWvSDK.createPallyConWvSDK(
@@ -111,7 +110,6 @@ import java.io.File
         val data3 = com.pallycon.widevine.model.ContentData(
             contentId = "TestRunner_HLS",
             url = "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/cmaf/master.m3u8",
-            localPath = localPath,
             drmConfig = config3,
         )
         val wvSDK3 = PallyConWvSDK.createPallyConWvSDK(

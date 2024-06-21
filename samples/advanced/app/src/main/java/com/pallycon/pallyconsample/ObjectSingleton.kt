@@ -3,6 +3,7 @@ package com.pallycon.pallyconsample
 import android.content.Context
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadNotificationHelper
+import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
 import com.pallycon.widevine.model.PallyConDrmConfigration
 import com.pallycon.widevine.model.PallyConEventListener
@@ -30,19 +31,24 @@ class ObjectSingleton {
         }
     }
 
+    fun updateContentData(index: Int, subTitle: String, status: DownloadState) {
+        contents[index].subTitle = subTitle
+        contents[index].status = status
+    }
+
     fun createContents(context: Context, pallyConEventListener: PallyConEventListener?, pallyConCallback: PallyConCallback?) {
         this.context = context
 
         val fi = context.getExternalFilesDir(null) ?: context.filesDir
         val localPath = File(fi, "downloads").toString()
-
+        PallyConWvSDK.setDownloadDirectory(context, localPath)
         val config = PallyConDrmConfigration(
             "DEMO",
             "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ=="
         )
         val data = com.pallycon.widevine.model.ContentData(
+            "demo-bbb-simple",
             "https://contents.pallycon.com/DEMO/app/big_buck_bunny/dash/stream.mpd",
-            localPath,
             config
         )
         val wvSDK = PallyConWvSDK.createPallyConWvSDK(
@@ -72,15 +78,15 @@ class ObjectSingleton {
             "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJwYWxseWNvbiIsImRybV90eXBlIjoid2lkZXZpbmUiLCJzaXRlX2lkIjoiREVNTyIsImhhc2giOiJkNTBDSVVUS1RwRDl6T3dGaU9DSysrXC83Q3pLOStZN3NkcHFhUUppdDJWQT0iLCJjaWQiOiJUZXN0UnVubmVyIiwicG9saWN5IjoiOVdxSVdrZGhweFZHSzhQU0lZY25Kc2N2dUE5c3hndWJMc2QrYWp1XC9ib21RWlBicUkreGFlWWZRb2Nja3Z1RWZBYXFkVzVoWGdKTmdjU1MzZlM3bzhNczB3QXNuN05UbmJIUmtwWDFDeTEyTkhwMlZPN1pMeFJvZDhVdkUwZnBFbUpYOUpuRDh6ZktkdE9RWk9UYXljK280RzNCT0xmU29OaFpWbkIwUGxEbW1rVk5jbXpndko2YloxdXBudjFcLzJFM2lXZXd3eklTNFVOQlhTS21zVUFCZnBRQjg4Q2VJYlZSM0hKZWJvcEpwZG1DTFFvRmtCT09DQU9qWElBOUVHIiwidGltZXN0YW1wIjoiMjAyMi0xMC0xMVQwNzowMToxN1oifQ=="
         )
         val data2 = com.pallycon.widevine.model.ContentData(
-            contentId = "TestRunner_DASH",
+            contentId = "TestRunner_User",
             url = "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/dash/stream.mpd",
-            localPath = localPath,
             drmConfig = config2
         )
         val wvSDK2 = PallyConWvSDK.createPallyConWvSDK(
             context,
             data2
         )
+
         val state2 = wvSDK2.getDownloadState()
         contents.add(
             ContentData(
@@ -90,8 +96,8 @@ class ObjectSingleton {
                 data2,
                 wvSDK2,
                 null,
-                "TestRunner",
-                "TestRunner"
+                "TestRunner_User1",
+                "TestRunner_User1"
             )
         )
 
@@ -102,8 +108,7 @@ class ObjectSingleton {
         val data3 = com.pallycon.widevine.model.ContentData(
             contentId = "TestRunner_HLS",
             url = "https://contents.pallycon.com/TEST/PACKAGED_CONTENT/TEST_SIMPLE/cmaf/master.m3u8",
-            localPath = localPath,
-            drmConfig = config3,
+            drmConfig = config3
         )
         val wvSDK3 = PallyConWvSDK.createPallyConWvSDK(
             context,
@@ -130,7 +135,7 @@ class ObjectSingleton {
 
     fun getDownloadManager(): DownloadManager? {
         return if (contents.size > 0) {
-            contents[0].wvSDK.getDownloadManager(this.context!!)
+            return contents[0].wvSDK?.getDownloadManager(this.context!!)
         } else {
             null
         }

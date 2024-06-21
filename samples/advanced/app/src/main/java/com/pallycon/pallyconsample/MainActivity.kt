@@ -36,108 +36,110 @@ class MainActivity : AppCompatActivity() {
     private var adapter: RecyclerViewAdapter? = null
     private val scope = CoroutineScope(Dispatchers.Main)
 
-    val contents = ObjectSingleton.getInstance()
-
-    var notificationPermissionToastShown = false
-    var downloadContentDataNotifictionPermission: ContentData? = null
+    private var notificationPermissionToastShown = false
+    private var downloadContentDataNotifictionPermission: ContentData? = null
 
     private val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
-        override fun onCompleted(currentUrl: String?) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = "COMPLETED"
-                contents.contents[index].status = DownloadState.COMPLETED
-                adapter?.notifyItemChanged(index)
-            }
-        }
-
-        override fun onProgress(currentUrl: String?, percent: Float, downloadedBytes: Long) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle =
-                    "Downloading.. %" + String.format("%.0f", percent)
-                if (contents.contents[index].status != DownloadState.COMPLETED) {
-                    contents.contents[index].status = DownloadState.DOWNLOADING
-                    adapter?.notifyItemChanged(index)
+        override fun onCompleted(contentData: com.pallycon.widevine.model.ContentData) {
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    prepareForIndex(index)
                 }
+        }
+
+        override fun onProgress(
+            contentData: com.pallycon.widevine.model.ContentData,
+            percent: Float,
+            downloadedBytes: Long,
+        ) {
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    if (data.status != DownloadState.COMPLETED) {
+                        ObjectSingleton.getInstance().updateContentData(
+                            index,
+                            "Downloading.. %" + String.format("%.0f", percent),
+                            DownloadState.DOWNLOADING
+                        )
+                        adapter?.updateItem(index, ObjectSingleton.getInstance().contents[index])
+                    }
+                }
+        }
+
+        override fun onStopped(contentData: com.pallycon.widevine.model.ContentData) {
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    ObjectSingleton.getInstance().updateContentData(
+                        index, "Stopped",
+                        DownloadState.STOPPED
+                    )
+                    adapter?.updateItem(index, ObjectSingleton.getInstance().contents[index])
+                }
+        }
+
+        override fun onRestarting(contentData: com.pallycon.widevine.model.ContentData) {
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    ObjectSingleton.getInstance().updateContentData(
+                        index, "Restart",
+                        DownloadState.RESTARTING
+                    )
+                    adapter?.updateItem(index, ObjectSingleton.getInstance().contents[index])
+                }
+        }
+
+        override fun onRemoved(contentData: com.pallycon.widevine.model.ContentData) {
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    prepareForIndex(index)
             }
         }
 
-        override fun onStopped(currentUrl: String?) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = "Stoped"
-                contents.contents[index].status = DownloadState.STOPPED
-                adapter?.notifyItemChanged(index)
-            }
-        }
-
-        override fun onRestarting(currentUrl: String?) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = "Restart"
-                contents.contents[index].status = DownloadState.RESTARTING
-                adapter?.notifyItemChanged(index)
-            }
-        }
-
-        override fun onRemoved(currentUrl: String?) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                prepareForIndex(index)
-                contents.contents[index].subTitle = "Not"
-                contents.contents[index].status = DownloadState.NOT
-                adapter?.notifyItemChanged(index)
-            }
-        }
-
-        override fun onPaused(currentUrl: String?) {
+        override fun onPaused(contentData: com.pallycon.widevine.model.ContentData) {
+            val contents = ObjectSingleton.getInstance()
             contents.contents.forEachIndexed { index, contentData ->
                 var state = contents.contents[index].wvSDK.getDownloadState()
                 if (state == DownloadState.DOWNLOADING) {
-                    contents.contents[index].subTitle = "Paused"
-                    contents.contents[index].status = DownloadState.PAUSED
-                    adapter?.notifyItemChanged(index)
+                    ObjectSingleton.getInstance()
+                        .updateContentData(index, "Paused", DownloadState.PAUSED)
+                    adapter?.updateItem(index, ObjectSingleton.getInstance().contents[index])
                 }
             }
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConException?) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            var subTitle: String
-            when (e) {
-                is PallyConException.DrmException -> {
-                    subTitle = "Drm Error"
-                }
+        override fun onFailed(
+            contentData: com.pallycon.widevine.model.ContentData,
+            e: PallyConException?,
+        ) {
 
-                is PallyConException.DownloadException -> {
-                    subTitle = "Download Error"
-                }
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    var subTitle: String
+                    when (e) {
+                        is PallyConException.DrmException -> {
+                            subTitle = "Drm Error"
+                        }
 
-                is PallyConException.DetectedDeviceTimeModifiedException -> {
-                    subTitle = "Device time modified Error"
-                }
+                        is PallyConException.DownloadException -> {
+                            subTitle = "Download Error"
+                        }
 
-                is PallyConException.NetworkConnectedException -> {
-                    subTitle = "Network Error"
-                }
+                        is PallyConException.DetectedDeviceTimeModifiedException -> {
+                            subTitle = "Device time modified Error"
+                        }
 
-                else -> {
-                    subTitle = "Failed"
-                }
-            }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = subTitle
-                contents.contents[index].status = DownloadState.FAILED
-                adapter?.notifyItemChanged(index)
-            }
+                        is PallyConException.NetworkConnectedException -> {
+                            subTitle = "Network Error"
+                        }
 
+                        else -> {
+                            subTitle = "Failed"
+                        }
+                    }
+
+                    ObjectSingleton.getInstance()
+                        .updateContentData(index, subTitle, DownloadState.FAILED)
+                    adapter?.updateItem(index, ObjectSingleton.getInstance().contents[index])
+                }
             e?.let {
                 scope.launch(Dispatchers.Main) {
                     Toast.makeText(this@MainActivity, "${it.msg}", Toast.LENGTH_SHORT).show()
@@ -145,14 +147,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConLicenseServerException?) {
-            val data = contents.contents.find { it.content.url == currentUrl }
-            data?.let {
-                val index = contents.contents.indexOf(it)
-                contents.contents[index].subTitle = "Failed"
-                contents.contents[index].status = DownloadState.FAILED
-                adapter?.notifyItemChanged(index)
-            }
+        override fun onFailed(
+            contentData: com.pallycon.widevine.model.ContentData,
+            e: PallyConLicenseServerException?,
+        ) {
+            ObjectSingleton.getInstance().contents.withIndex()
+                .find { it.value.content == contentData }?.let { (index, data) ->
+                    ObjectSingleton.getInstance()
+                        .updateContentData(index, "Failed", DownloadState.FAILED)
+                    adapter?.updateItem(index, ObjectSingleton.getInstance().contents[index])
+                }
 
             if (e != null && e.errorCode() != 7127) {
                 Toast.makeText(
@@ -198,6 +202,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         ObjectSingleton.release()
+        val contents = ObjectSingleton.getInstance()
         for (content in contents.contents) {
             content.wvSDK.release()
         }
@@ -227,13 +232,12 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 SelectType.Remove -> removeContent(contentData)
-                SelectType.Pause -> pauseContentAll(contentData)
-                SelectType.Resume -> resumeContent(contentData)
+                SelectType.Stop -> stopContent(contentData)
                 SelectType.Play -> playContent(contentData)
                 SelectType.Menu -> menuContent(contentData)
             }
         }
-        adapter?.datalist = contents.contents
+        adapter?.dataList = ObjectSingleton.getInstance().contents
         binding.recyclerView.adapter = adapter!!
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -247,13 +251,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        for (i in 0 until contents.contents.size) {
-            contents.contents[i].wvSDK.setPallyConEventListener(pallyConEventListener)
+        for (i in 0 until ObjectSingleton.getInstance().contents.size) {
+            ObjectSingleton.getInstance().contents[i].wvSDK.setPallyConEventListener(
+                pallyConEventListener
+            )
         }
     }
 
     fun prepare() {
-        for (i in 0 until contents.contents.size) {
+        for (i in 0 until ObjectSingleton.getInstance().contents.size) {
             prepareForIndex(i)
         }
     }
@@ -261,11 +267,12 @@ class MainActivity : AppCompatActivity() {
     private fun prepareForIndex(index: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             // migration is required in advance.
+            val contents = ObjectSingleton.getInstance()
             try {
                 val sdk = contents.contents[index].wvSDK
                 if (sdk.needsMigrateDownloadedContent()
                 ) {
-                    val isSuccess = contents.contents[index].wvSDK.migrateDownloadedContent(
+                    val isSuccess = sdk.migrateDownloadedContent(
                         contentName = "", // content's name which will be used for the name of downloaded content's folder
                         downloadedFolderName = null // content download folder name
                     )
@@ -304,7 +311,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun downloadContent(contentData: ContentData) {
         if (contentData.downloadTracks == null) {
-            val index = contents.contents.indexOf(contentData)
+            val index = ObjectSingleton.getInstance().contents.indexOf(contentData)
             prepareForIndex(index)
         } else {
             TrackSelectDialog(contentData.downloadTracks!!) { track ->
@@ -345,21 +352,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun resumeContent(contentData: ContentData) {
-        contentData.wvSDK.resumeAll()
-    }
-
     private fun removeContent(contentData: ContentData) {
         try {
             contentData.wvSDK.remove()
-            prepare()
         } catch (e: PallyConException.DownloadException) {
             print(e.message)
         }
     }
 
-    private fun pauseContentAll(contentData: ContentData) {
-        contentData.wvSDK.pauseAll()
+    private fun stopContent(contentData: ContentData) {
+        contentData.wvSDK.stop()
     }
 
     private fun playContent(contentData: ContentData) {
@@ -376,6 +378,8 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("Delete Menu")
         builder.setItems(
             arrayOf(
+                "download pause all",
+                "download resume all",
                 "download license",
                 "renew license",
                 "remove license",
@@ -388,7 +392,9 @@ class MainActivity : AppCompatActivity() {
         ) { _, i ->
             val wvSDK = contentData.wvSDK
             when (i) {
-                0 -> {
+                0 -> wvSDK.pauseAll()
+                1 -> wvSDK.resumeAll()
+                2 -> {
                     scope.launch {
                         wvSDK.downloadLicense(null, onSuccess = {
                             Toast.makeText(
@@ -404,14 +410,14 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                1 -> wvSDK.renewLicense()
-                2 -> wvSDK.removeLicense()
-                3 -> {
+                3 -> wvSDK.renewLicense()
+                4 -> wvSDK.removeLicense()
+                5 -> {
                     wvSDK.removeAll()
                     prepare()
                 }
 
-                4 -> {
+                6 -> {
                     var info = PallyConDrmInformation(0, 0)
                     try {
                         info = wvSDK.getDrmInformation()
@@ -430,7 +436,7 @@ class MainActivity : AppCompatActivity() {
                     alertBuilder.show()
                 }
 
-                5 -> {
+                7 -> {
                     val info = wvSDK.getDownloadFileInformation()
                     val alertBuilder = AlertDialog.Builder(this)
                     alertBuilder.setTitle("drm license info")
@@ -441,7 +447,7 @@ class MainActivity : AppCompatActivity() {
                     alertBuilder.show()
                 }
 
-                6 -> {
+                8 -> {
                     var keySetId = wvSDK.getKeySetId()
                     val alertBuilder = AlertDialog.Builder(this)
                     alertBuilder.setTitle("KetSetId")
@@ -452,7 +458,7 @@ class MainActivity : AppCompatActivity() {
                     alertBuilder.show()
                 }
 
-                7 -> {
+                9 -> {
                     wvSDK.reProvisionRequest({}, { e ->
                         print(e.message())
                     })

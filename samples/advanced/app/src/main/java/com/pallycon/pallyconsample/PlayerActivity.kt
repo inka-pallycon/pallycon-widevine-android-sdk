@@ -39,24 +39,25 @@ class PlayerActivity : AppCompatActivity() {
         // TODO : Set Sercurity API to protect media recording by screen recorder
         val view = binding.exoplayerView.videoSurfaceView as SurfaceView
         playerView = binding.exoplayerView
+        playerView?.setShowSubtitleButton(true);
         if (Build.VERSION.SDK_INT >= 17) {
             view.setSecure(true)
         }
     }
 
     private fun initializePlayer() {
-        if (intent.hasExtra(CONTENT) && wvSDK == null) {
-            var content: ContentData? = intent.getParcelableExtra(CONTENT)
-            if (content != null && content!!.url != null) {
-                wvSDK = PallyConWvSDK.createPallyConWvSDK(
-                    this,
-                    content!!
-                )
-            }
-        }
-
         var mediaSource: MediaSource? = null
         try {
+            if (intent.hasExtra(CONTENT) && wvSDK == null) {
+                var content: ContentData? = intent.getParcelableExtra(CONTENT)
+                if (content != null && content!!.url != null) {
+                    wvSDK = PallyConWvSDK.createPallyConWvSDK(
+                        this,
+                        content!!
+                    )
+                }
+            }
+
             val drmInfo = wvSDK?.getDrmInformation()
             drmInfo?.let {
                 if ((it.licenseDuration <= 0 || it.playbackDuration <= 0) &&

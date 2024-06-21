@@ -65,11 +65,11 @@
                 />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/pause_button"
+                android:id="@+id/stop_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
-                app:icon="@drawable/ic_baseline_pause_circle_outline_24"
+                app:icon="@drawable/ic_baseline_stop_download_24"
                 app:iconTint="@color/download_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

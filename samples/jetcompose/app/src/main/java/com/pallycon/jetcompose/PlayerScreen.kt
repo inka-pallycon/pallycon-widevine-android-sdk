@@ -26,6 +26,7 @@ import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
+import com.pallycon.widevine.model.ContentData
 import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.sdk.PallyConWvSDK
 import com.pallycon.widevine.model.ContentData as PallyConData
@@ -105,31 +106,31 @@ fun getMediaSourceUsingSDK(context: Context, pallyConData: PallyConData): MediaS
     val wvmAgent = PallyConWvSDK.createPallyConWvSDK(context, pallyConData)
 
     val pallyConEventListener: PallyConEventListener = object : PallyConEventListener {
-        override fun onCompleted(currentUrl: String?) {
+        override fun onCompleted(contentData: ContentData) {
 
         }
 
-        override fun onProgress(currentUrl: String?, percent: Float, downloadedBytes: Long) {
+        override fun onProgress(contentData: ContentData, percent: Float, downloadedBytes: Long) {
 
         }
 
-        override fun onStopped(currentUrl: String?) {
+        override fun onStopped(contentData: ContentData) {
 
         }
 
-        override fun onRestarting(currentUrl: String?) {
+        override fun onRestarting(contentData: ContentData) {
 
         }
 
-        override fun onRemoved(currentUrl: String?) {
+        override fun onRemoved(contentData: ContentData) {
 
         }
 
-        override fun onPaused(currentUrl: String?) {
+        override fun onPaused(contentData: ContentData) {
 
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConException?) {
+        override fun onFailed(contentData: ContentData, e: PallyConException?) {
             if (e is PallyConException.PallyConLicenseCipherException) {
                 // Ignore the error except when using the LicenseCipher function.
             } else {
@@ -137,7 +138,7 @@ fun getMediaSourceUsingSDK(context: Context, pallyConData: PallyConData): MediaS
             }
         }
 
-        override fun onFailed(currentUrl: String?, e: PallyConLicenseServerException?) {
+        override fun onFailed(contentData: ContentData, e: PallyConLicenseServerException?) {
             val message = "${e?.errorCode()}, ${e?.body()}"
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
