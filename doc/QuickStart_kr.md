@@ -60,25 +60,32 @@
 	}
 	
 	dependencies {
-	    implementation fileTree(dir: 'libs', include: ['*.jar'])
-	    implementation fileTree(dir: 'libs', include: ['*.aar'])
-	    implementation 'androidx.appcompat:appcompat:1.4.2'
-	    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-	    implementation "androidx.core:core-ktx:1.8.0"
-	    implementation "com.google.android.material:material:1.6.1"
-	    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
-	
-	    // Exo
-	    implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
-	    implementation "com.google.android.exoplayer:exoplayer-core:2.18.1"
-	    implementation "com.google.android.exoplayer:exoplayer-dash:2.18.1"
-	    implementation "com.google.android.exoplayer:extension-okhttp:2.18.1"
-	
-	    // Gson
-	    implementation "com.google.code.gson:gson:2.9.1"
-	
-	    // Secure
-	    implementation "androidx.security:security-crypto-ktx:1.1.0-alpha03"
+	    implementation 'androidx.core:core-ktx:1.8.0'
+        implementation 'com.google.android.material:material:1.6.1'
+        implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+        implementation 'androidx.appcompat:appcompat:1.4.2'
+        implementation 'androidx.recyclerview:recyclerview:1.2.1'
+        implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+        implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+        implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+
+        implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
+        // Exo
+        implementation "androidx.media3:media3-exoplayer:1.1.1"
+        implementation "androidx.media3:media3-ui:1.1.1"
+        implementation "androidx.media3:media3-exoplayer-dash:1.1.1"
+        implementation "androidx.media3:media3-exoplayer-hls:1.1.1"
+        implementation "androidx.media3:media3-exoplayer-rtsp:1.1.1"
+        implementation "androidx.media3:media3-exoplayer-smoothstreaming:1.1.1"
+        implementation "androidx.media3:media3-datasource-okhttp:1.1.1"
+        implementation "androidx.media3:media3-cast:1.1.1"
+
+        // Gson
+        implementation 'com.google.code.gson:gson:2.9.1'
+
+        // Secure
+        implementation "androidx.security:security-crypto-ktx:1.1.0-alpha03"
 	}
 	```
 
