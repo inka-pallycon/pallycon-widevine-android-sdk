@@ -16,7 +16,7 @@ buildscript {
     ext.targetSdkVersion = 33
     ext.dokkaVersion = '1.9.20'
     ext.gradleVersion = '8.2.1'
-    ext.kotlinVersion = '1.7.10'
+    ext.kotlinVersion = '1.9.23'
     ext.nexusVersion = '1.2.0'
 
     repositories {
@@ -37,6 +37,9 @@ allprojects {
     repositories {
         maven {
             url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url  'https://artifacts.bitmovin.com/artifactory/public-releases'
         }
         google()
         mavenCentral()

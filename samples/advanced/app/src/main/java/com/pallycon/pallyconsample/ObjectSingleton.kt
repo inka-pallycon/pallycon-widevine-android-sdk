@@ -3,6 +3,9 @@ package com.pallycon.pallyconsample
 import android.content.Context
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadNotificationHelper
+import com.bitmovin.analytics.api.AnalyticsConfig
+import com.bitmovin.analytics.api.RetryPolicy
+import com.bitmovin.analytics.media3.exoplayer.api.IMedia3ExoPlayerCollector
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
 import com.pallycon.widevine.model.PallyConDrmConfigration
@@ -14,6 +17,11 @@ class ObjectSingleton {
     val contents = mutableListOf<ContentData>()
     val downloadChannel = "download_channel"
     var context: Context? = null
+
+//    private val analyticsConfig = AnalyticsConfig("e18f4a0f-e96b-4051-9468-730ac683a603")
+//    private val analyticsConfig = AnalyticsConfig("302d9067-3462-4253-a867-b92e6b2ed237")
+    private val analyticsConfig = AnalyticsConfig(licenseKey = "302d9067-3462-4253-a867-b92e6b2ed237", retryPolicy = RetryPolicy.LONG_TERM)
+    var analyticsCollector: IMedia3ExoPlayerCollector? = null
 
     companion object {
         private var instance: ObjectSingleton? = null
@@ -44,7 +52,7 @@ class ObjectSingleton {
         PallyConWvSDK.setDownloadDirectory(context, localPath)
         val config = PallyConDrmConfigration(
             "DEMO",
-            "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ=="
+            "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJ0ZXN0LXVzZXIiLCJkcm1fdHlwZSI6IndpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJoYXNoIjoicEMxWlB0QlF4ZHpoRldESnQrNkhrQTZsV2dzUEhCMFhERWlUYjVBWGRFaz0iLCJjaWQiOiJwYWxtdWx0aSIsInBvbGljeSI6IjlXcUlXa2RocHhWR0s4UFNJWWNuSnNjdnVBOXN4Z3ViTHNkK2FqdVwvYm9rQzlTMit4QVBZUmJtZno4dG9FQjM4UGRyM0JqeHZId0J1WlA2WUttY042dHlFSW16a05zQ1I2ZllkUlVvMG9ielVkdVhNdTAydjlxemZEMXdzUWlkdEJtdUZUNjNKc01KTzdDZ2xyWWMyWkRaeWt0dHRQNW1FenR5Mm9aOWdFaVVkYXFCTFE5Sm5sNlZQMko3THlZQVdJNmI1a0g3aUdBMXE4WDE2MVFcL2V5OFo1UHpqZDRhc2cwUVRJaXUwb3VuMzdGc0ZPbzFyYkZcL3FBc0IzYUlEUDdQc2FjTE5Wc2l4bGVCSEV6WjZUWEVTelVFdWtNV0l3R29TdjdCK1d1YW5vTnVIK0RVRitZalByTU5Gbjk1TlwvQ3hJeUY5enQ5UlplT0Q2VHA4UDhHaEZIRlRTSXFSWEVPSkdKMTRUYlZ6TEI3UmptM2tWaUZIRGduTjY1Nks0S3RxMGxuNktXbWRacThobGtMNUVDU21CVUNzZDh5a3lGXC92ckFnS2VnWVpranhmZ0VmT096QTZXYXFJaXl6VTh1YWxxV1RGT0hKTVArY3hLSkNcL2gyd2Y3MVVHQU9vTFpyUzRDOEcxYm51c1lqUklJVEpnZXpzeStcL0kzWXdRWmZiamhQRUZaSGRyOHNtSERydmE0cXNzVk9cL0JUckhsb1JDWTRRQnRWZzZia2g4MURleHlRVjNNZExyWVN5RXoycDlqcU9oY2tpNCtEMHRcL0VhUTNUODBkZHdJdEZCeWtKaGI5MmFFNEZJc09wU3VuNVgrNUlVRGgycTRvanI3cTFNKzNGaU1ocFZ0TWpGSm56UE5JV0NqSytkN1RHMnRKZHRhTnBoTHc3bk1cL1NJZlRUNHd4ZVUxQTk5d3E1ZE1iVWNmTGd6dWZuTkJKSFA1RnY2Z1IxbmNYWDFnVWgyQUhlVHpPUU5DYkl4SllmOCswTksrRVVJUWZVcDQ2TWFIckI4TXFSTkFsTUQrR0gzRHptMXpOUlM3bFNHSkRCS1YwZVNRY1V0eEFZV0dESXVYbDNBanRqdW81YU1wWlV3c3hGSm9CVGNFZHNUTWphY2k4MmhMOW5Jbks0RnBOMWxxQlFcL0FkVmpsRTNzdTROR1dtcms4WW1SVmtvellKaXZOYXBmSXBCVUMyb0dqZGN2SVwvVnVjR0xydlhLTThNbThrMXprZ0FFVWR0RGVLR3dpdk1vV1NDZHh4NUhRZW83N3lLMjNOUk9zZ3RjRjN3YjNJbDVsTCtwXC9ENGhiSHh4XC8xaG5PZ0lBNEJtUHE2Z1NTMD0iLCJ0aW1lc3RhbXAiOiIyMDI0LTA1LTE0VDAyOjQ0OjM4WiJ9"
         )
         val data = com.pallycon.widevine.model.ContentData(
             "demo-bbb-simple",
@@ -127,6 +135,34 @@ class ObjectSingleton {
                 "TestRunner"
             )
         )
+
+        val config4 = PallyConDrmConfigration(
+            siteId = "4LYI",
+            token = "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJ0ZXN0LXVzZXIiLCJkcm1fdHlwZSI6IndpZGV2aW5lIiwic2l0ZV9pZCI6IjRMWUkiLCJoYXNoIjoiXC9FemdsSVA2UEVKbG5DWldWOXNGeGNneFl3eTlpSTZVV2R5RytoRDBLcUU9IiwiY2lkIjoiQmlnQnVja0J1bm55X3NrXzIzMTEyMiIsInBvbGljeSI6ImR1bEVac0NxaG9qdExNTWJOT3oxQzBUMysyZUZiRzByWDNDZWJRdjFJT1ZIZXZwaVRhYStIR3FtXC9ydVMrWnhNQ2grNCs1OGJLc1NZUllxVVhlRlBObGZIejU0d29VdkYrRVg5VVU4YU5NZUFjQllXYnlXNTVmTmhPNExcL3lHUU4wUlFUeGFZSW8wQzBRNFEybCsyTytFWW1WUUZzRzRMU2k4ZkQ0RjhmMk93SG9qenhXNDV3Sm5EUk1Mb2s5NFpxeWU0YmU3bksyRVwvQ1BxWjZFUUtBZGF2cDgwd09oMzl2c3hQOE1iaFA5am9JQ2lzVEYyN0RSMlExY2twVmFLU3pRSVVSQzMzSlNNNHh0N0JrdmowQUpwZHhqVk82dkh5UnlVa1ZVTzVXNEpVS2szOEc4NGtNYWhhc2hFXC90N2V5YW04MWRkSnNqRHg1K2hNcGFGbmxkREZjdDczWThTV3JuVGNnak9rRjJPM1FtVk1Vc21JR0xYeTZON0VyT0NIV0ZBdzBjNnR4K2xqOGFPalNvY2I1OHV5SkJHR2kxSStzR3NXSElhVUZZa0Q2N1N1OVNsaHVHK3I2bVdyVXV5ZVwvMDZ0VkFmaFpcL3FvNlFFWjZaVTl1VE5ZQkhFYWFsWThsUmdsMEZmZ0JKc01EdStcL080ZmlwSnlvYzFyZXF1U3I1dWJxekhacGpuRlwvUUpOVjZES1lBVTRyZkZpNTY4Y1ZTVTl2N3EyVnFGNFdUZDNselozWWFzamphcFhteXVST3N2YzRmeW1kWFZJb2xJM1dUQjFIQ29sZzFjaEFpYTRlXC85aXhHMDdcLzBtTVRhcEdQMmZBR1wvYnZ3d2VCZzVLXC9LZjBaZUNCT0YwRGdndVU3R2c4VFpOWVJTb01FTFhlTHJKNWR1Zzc3cSs2ekYzUXJ1eWJzc2dCYVQwaUxlZnJUUjFcL1JSd25BRURoV1FqY2JBeGtJYnlmUjYwVjA3UEVCeUJqSzk5VlFGUW1DWTQyNGRwUW5UNXFTdEhcL1wvd01ucU4rSWpkWXd5QlwvaHIwN01KTGJveHNRNVBBRmF5elJBb2xkZDYyQWVLNTNpWENwUVJydSt4SVI5ZzNPVExPZXdTbXRBVGZxXC9QQ1dLUVFtSWxMdEcyRHNNNzZjdHI0TGFvK2FyaWYzV1NOdVRjdkU4NEFMTU9wNDBTd2l5enkwb1BzeWpYNUk2ZEMrMWxod0taeWx5eTl5ZmR5SDlBRVVPeWgzTGpUamp1UDFNS0U2WmtTK1RvUlhCMTArdXI5VnZZMXVNUFZ4SDArY3RkS3V3eWkraEZGTjQ0bWVHdkZCeHZHdUpnWjlVRWY5RnFOWT0iLCJ0aW1lc3RhbXAiOiIyMDI0LTA2LTI1VDA1OjM4OjI0WiJ9",
+            licenseCipherPath = "plc-kt-4LYI.bin"
+        )
+        val data4 = com.pallycon.widevine.model.ContentData(
+            contentId = "TATATA",
+            url = "https://contents.pallycon.com/TS_PackTest/tommy/pack_file/global_QA/BigBuckBunny_sk_231122/dash/stream.mpd",
+            drmConfig = config4
+        )
+        val wvSDK4 = PallyConWvSDK.createPallyConWvSDK(
+            context,
+            data4
+        )
+        val state4 = wvSDK4.getDownloadState()
+        contents.add(
+            ContentData(
+                "TATA",
+                state4,
+                state4.toString(),
+                data4,
+                wvSDK4,
+                null,
+                "TATAT",
+                "TATAT"
+            )
+        )
     }
 
     fun getDownloadNotificationHelper(): DownloadNotificationHelper {
@@ -139,5 +175,9 @@ class ObjectSingleton {
         } else {
             null
         }
+    }
+
+    fun setAnalytics(context: Context) {
+        analyticsCollector = IMedia3ExoPlayerCollector.Factory.create(context, analyticsConfig)
     }
 }

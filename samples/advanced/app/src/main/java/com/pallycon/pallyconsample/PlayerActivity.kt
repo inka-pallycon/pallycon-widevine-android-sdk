@@ -2,6 +2,7 @@ package com.pallycon.pallyconsample
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +12,14 @@ import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.ui.PlayerView
+import com.bitmovin.analytics.api.AnalyticsConfig
+import com.bitmovin.analytics.api.SourceMetadata
+import com.bitmovin.analytics.media3.exoplayer.api.IMedia3ExoPlayerCollector
 import com.pallycon.pallyconsample.databinding.ActivityPlayerBinding
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.model.ContentData
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.sdk.PallyConWvSDK
-
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -24,7 +27,6 @@ class PlayerActivity : AppCompatActivity() {
     private var playerView: PlayerView? = null
     private var exoPlayer: ExoPlayer? = null
     private var wvSDK: PallyConWvSDK? = null
-//    private var content: ContentData? = null
 
     companion object {
         const val CONTENT = "CONTENT_ITEM"
@@ -43,13 +45,18 @@ class PlayerActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 17) {
             view.setSecure(true)
         }
+
+        if (ObjectSingleton.getInstance().analyticsCollector == null) {
+            ObjectSingleton.getInstance().setAnalytics(this)
+        }
     }
 
     private fun initializePlayer() {
+        var content: ContentData? = null
         var mediaSource: MediaSource? = null
         try {
             if (intent.hasExtra(CONTENT) && wvSDK == null) {
-                var content: ContentData? = intent.getParcelableExtra(CONTENT)
+                content = intent.getParcelableExtra(CONTENT)
                 if (content != null && content!!.url != null) {
                     wvSDK = PallyConWvSDK.createPallyConWvSDK(
                         this,
@@ -102,6 +109,14 @@ class PlayerActivity : AppCompatActivity() {
             .also { player ->
                 exoPlayer = player
                 binding.exoplayerView.player = player
+                val sourceMetadata =
+                    SourceMetadata(
+                        videoId = mediaSource!!.mediaItem.mediaId,
+                        title = content?.contentId,
+                        path = content?.url,
+                    )
+                ObjectSingleton.getInstance().analyticsCollector?.sourceMetadata = sourceMetadata
+                ObjectSingleton.getInstance().analyticsCollector?.attachPlayer(player)
 //                exoPlayer?.setVideoSurfaceView(binding.surfaceView)
 //                exoPlayer?.setVideoSurface(binding.surfaceView.holder.surface)
                 exoPlayer?.setMediaSource(mediaSource!!)
@@ -151,5 +166,6 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun releasePlayer() {
         exoPlayer?.release()
+        ObjectSingleton.getInstance().analyticsCollector?.detachPlayer()
     }
 }
