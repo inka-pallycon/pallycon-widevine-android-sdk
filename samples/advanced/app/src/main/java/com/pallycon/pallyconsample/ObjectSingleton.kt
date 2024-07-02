@@ -3,9 +3,6 @@ package com.pallycon.pallyconsample
 import android.content.Context
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadNotificationHelper
-import com.bitmovin.analytics.api.AnalyticsConfig
-import com.bitmovin.analytics.api.RetryPolicy
-import com.bitmovin.analytics.media3.exoplayer.api.IMedia3ExoPlayerCollector
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
 import com.pallycon.widevine.model.PallyConDrmConfigration
@@ -20,8 +17,6 @@ class ObjectSingleton {
 
 //    private val analyticsConfig = AnalyticsConfig("e18f4a0f-e96b-4051-9468-730ac683a603")
 //    private val analyticsConfig = AnalyticsConfig("302d9067-3462-4253-a867-b92e6b2ed237")
-    private val analyticsConfig = AnalyticsConfig(licenseKey = "302d9067-3462-4253-a867-b92e6b2ed237", retryPolicy = RetryPolicy.LONG_TERM)
-    var analyticsCollector: IMedia3ExoPlayerCollector? = null
 
     companion object {
         private var instance: ObjectSingleton? = null
@@ -147,9 +142,5 @@ class ObjectSingleton {
         } else {
             null
         }
-    }
-
-    fun setAnalytics(context: Context) {
-        analyticsCollector = IMedia3ExoPlayerCollector.Factory.create(context, analyticsConfig)
     }
 }

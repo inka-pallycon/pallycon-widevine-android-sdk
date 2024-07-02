@@ -12,9 +12,6 @@ import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.ui.PlayerView
-import com.bitmovin.analytics.api.AnalyticsConfig
-import com.bitmovin.analytics.api.SourceMetadata
-import com.bitmovin.analytics.media3.exoplayer.api.IMedia3ExoPlayerCollector
 import com.pallycon.pallyconsample.databinding.ActivityPlayerBinding
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.model.ContentData
@@ -44,10 +41,6 @@ class PlayerActivity : AppCompatActivity() {
         playerView?.setShowSubtitleButton(true);
         if (Build.VERSION.SDK_INT >= 17) {
             view.setSecure(true)
-        }
-
-        if (ObjectSingleton.getInstance().analyticsCollector == null) {
-            ObjectSingleton.getInstance().setAnalytics(this)
         }
     }
 
@@ -109,14 +102,6 @@ class PlayerActivity : AppCompatActivity() {
             .also { player ->
                 exoPlayer = player
                 binding.exoplayerView.player = player
-                val sourceMetadata =
-                    SourceMetadata(
-                        videoId = mediaSource!!.mediaItem.mediaId,
-                        title = content?.contentId,
-                        path = content?.url,
-                    )
-                ObjectSingleton.getInstance().analyticsCollector?.sourceMetadata = sourceMetadata
-                ObjectSingleton.getInstance().analyticsCollector?.attachPlayer(player)
 //                exoPlayer?.setVideoSurfaceView(binding.surfaceView)
 //                exoPlayer?.setVideoSurface(binding.surfaceView.holder.surface)
                 exoPlayer?.setMediaSource(mediaSource!!)
@@ -166,6 +151,5 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun releasePlayer() {
         exoPlayer?.release()
-        ObjectSingleton.getInstance().analyticsCollector?.detachPlayer()
     }
 }
