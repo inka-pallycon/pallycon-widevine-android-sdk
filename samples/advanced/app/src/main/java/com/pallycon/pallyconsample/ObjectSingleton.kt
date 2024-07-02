@@ -135,34 +135,6 @@ class ObjectSingleton {
                 "TestRunner"
             )
         )
-
-        val config4 = PallyConDrmConfigration(
-            siteId = "4LYI",
-            token = "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJ0ZXN0LXVzZXIiLCJkcm1fdHlwZSI6IndpZGV2aW5lIiwic2l0ZV9pZCI6IjRMWUkiLCJoYXNoIjoiXC9FemdsSVA2UEVKbG5DWldWOXNGeGNneFl3eTlpSTZVV2R5RytoRDBLcUU9IiwiY2lkIjoiQmlnQnVja0J1bm55X3NrXzIzMTEyMiIsInBvbGljeSI6ImR1bEVac0NxaG9qdExNTWJOT3oxQzBUMysyZUZiRzByWDNDZWJRdjFJT1ZIZXZwaVRhYStIR3FtXC9ydVMrWnhNQ2grNCs1OGJLc1NZUllxVVhlRlBObGZIejU0d29VdkYrRVg5VVU4YU5NZUFjQllXYnlXNTVmTmhPNExcL3lHUU4wUlFUeGFZSW8wQzBRNFEybCsyTytFWW1WUUZzRzRMU2k4ZkQ0RjhmMk93SG9qenhXNDV3Sm5EUk1Mb2s5NFpxeWU0YmU3bksyRVwvQ1BxWjZFUUtBZGF2cDgwd09oMzl2c3hQOE1iaFA5am9JQ2lzVEYyN0RSMlExY2twVmFLU3pRSVVSQzMzSlNNNHh0N0JrdmowQUpwZHhqVk82dkh5UnlVa1ZVTzVXNEpVS2szOEc4NGtNYWhhc2hFXC90N2V5YW04MWRkSnNqRHg1K2hNcGFGbmxkREZjdDczWThTV3JuVGNnak9rRjJPM1FtVk1Vc21JR0xYeTZON0VyT0NIV0ZBdzBjNnR4K2xqOGFPalNvY2I1OHV5SkJHR2kxSStzR3NXSElhVUZZa0Q2N1N1OVNsaHVHK3I2bVdyVXV5ZVwvMDZ0VkFmaFpcL3FvNlFFWjZaVTl1VE5ZQkhFYWFsWThsUmdsMEZmZ0JKc01EdStcL080ZmlwSnlvYzFyZXF1U3I1dWJxekhacGpuRlwvUUpOVjZES1lBVTRyZkZpNTY4Y1ZTVTl2N3EyVnFGNFdUZDNselozWWFzamphcFhteXVST3N2YzRmeW1kWFZJb2xJM1dUQjFIQ29sZzFjaEFpYTRlXC85aXhHMDdcLzBtTVRhcEdQMmZBR1wvYnZ3d2VCZzVLXC9LZjBaZUNCT0YwRGdndVU3R2c4VFpOWVJTb01FTFhlTHJKNWR1Zzc3cSs2ekYzUXJ1eWJzc2dCYVQwaUxlZnJUUjFcL1JSd25BRURoV1FqY2JBeGtJYnlmUjYwVjA3UEVCeUJqSzk5VlFGUW1DWTQyNGRwUW5UNXFTdEhcL1wvd01ucU4rSWpkWXd5QlwvaHIwN01KTGJveHNRNVBBRmF5elJBb2xkZDYyQWVLNTNpWENwUVJydSt4SVI5ZzNPVExPZXdTbXRBVGZxXC9QQ1dLUVFtSWxMdEcyRHNNNzZjdHI0TGFvK2FyaWYzV1NOdVRjdkU4NEFMTU9wNDBTd2l5enkwb1BzeWpYNUk2ZEMrMWxod0taeWx5eTl5ZmR5SDlBRVVPeWgzTGpUamp1UDFNS0U2WmtTK1RvUlhCMTArdXI5VnZZMXVNUFZ4SDArY3RkS3V3eWkraEZGTjQ0bWVHdkZCeHZHdUpnWjlVRWY5RnFOWT0iLCJ0aW1lc3RhbXAiOiIyMDI0LTA2LTI1VDA1OjM4OjI0WiJ9",
-            licenseCipherPath = "plc-kt-4LYI.bin"
-        )
-        val data4 = com.pallycon.widevine.model.ContentData(
-            contentId = "TATATA",
-            url = "https://contents.pallycon.com/TS_PackTest/tommy/pack_file/global_QA/BigBuckBunny_sk_231122/dash/stream.mpd",
-            drmConfig = config4
-        )
-        val wvSDK4 = PallyConWvSDK.createPallyConWvSDK(
-            context,
-            data4
-        )
-        val state4 = wvSDK4.getDownloadState()
-        contents.add(
-            ContentData(
-                "TATA",
-                state4,
-                state4.toString(),
-                data4,
-                wvSDK4,
-                null,
-                "TATAT",
-                "TATAT"
-            )
-        )
     }
 
     fun getDownloadNotificationHelper(): DownloadNotificationHelper {
