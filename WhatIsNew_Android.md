@@ -10,30 +10,6 @@
    >    - You can set the download directory with the same function as localPath of ContentData.
    >    - You can no longer set a separate directory for each content (the old code also behaved with the same directory).
 
-# Version 4.2.0
-
->- PallyConSDK has been updated to version 4.2.0.
-   >  - Added stop() function.
-   >    - From now on, downloading content can be interrupted in the middle of the download.
-   >    - Content that has been stopped can be resumed when downloading again.
-   >  - Parameters of PallyConEventListener event listeners have been changed.
-   >    - contentUrl -> ContentData(contentId, url, ..., drmConfig)
-   >  - localPath of ContentData class has been deleted and setDownloadDirectory() static function has been added.
-   >    - You can set the download directory with the same function as localPath of ContentData.
-   >    - You can no longer set a separate directory for each content (the old code also behaved with the same directory).
-
-# Version 4.2.0
-
->- PallyConSDK has been updated to version 4.2.0.
-   >  - Added stop() function.
-   >    - From now on, downloading content can be interrupted in the middle of the download.
-   >    - Content that has been stopped can be resumed when downloading again.
-   >  - Parameters of PallyConEventListener event listeners have been changed.
-   >    - contentUrl -> ContentData(contentId, url, ..., drmConfig)
-   >  - localPath of ContentData class has been deleted and setDownloadDirectory() static function has been added.
-   >    - You can set the download directory with the same function as localPath of ContentData.
-   >    - You can no longer set a separate directory for each content (the old code also behaved with the same directory).
-
 # Version 4.1.0
 
 >- PallyConSDK has been updated to version 4.1.0.
