@@ -46,6 +46,10 @@ You can add the Pallycon SDK to your development project by following these step
 4. Apply the below configuration in build.gradle (app).
 
 	```gradle
+ 	plugins {
+        id 'kotlin-parcelize'
+    }
+ 
 	android {
 	    defaultConfig {
 	        minSdkVersion 21

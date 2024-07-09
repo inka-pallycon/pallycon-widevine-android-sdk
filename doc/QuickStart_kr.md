@@ -45,22 +45,26 @@
 
 4. build.gradle (module)에 다음 사항을 반영합니다.
 
-	```gradle
-	android {
-	    defaultConfig {
-	        minSdkVersion 21
-	        targetSdkVersion 33
-	        multiDexEnabled true
-	    }
+    ```gradle
+	plugins {
+        id 'kotlin-parcelize'
+    }
+ 
+    android {
+        defaultConfig {
+            minSdkVersion 21
+            targetSdkVersion 33
+            multiDexEnabled true
+        }
 	
-	    compileOptions {
-	        sourceCompatibility JavaVersion.VERSION_1_8
-	        targetCompatibility JavaVersion.VERSION_1_8
-	    }
-	}
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
 	
-	dependencies {
-	    implementation 'androidx.core:core-ktx:1.8.0'
+    dependencies {
+        implementation 'androidx.core:core-ktx:1.8.0'
         implementation 'com.google.android.material:material:1.6.1'
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
         implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -86,8 +90,8 @@
 
         // Secure
         implementation "androidx.security:security-crypto-ktx:1.1.0-alpha03"
-	}
-	```
+    }
+    ```
 
 5. MainActivity에 PallyConEventListener를 구현합니다. (샘플 소스 참조)
 
