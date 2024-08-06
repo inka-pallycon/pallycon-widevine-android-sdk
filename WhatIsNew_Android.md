@@ -1,14 +1,35 @@
+# Version 4.3.0
+
+- **Support for license policy 2.0:**
+    - The SDK now processes license data according to policy 2.0 specifications.
+    - `setPallyConCallback()` and `setDownloadService()` have been changed to static functions.
+    - Use `PallyConWvSDK.setPallyConCallback()` from now on.
+    - The old `setPallyConCallback()` and `setDownloadService()` functions are deprecated.
+
+- **Event listener functions added:**
+    - `addPallyConEventListener()` and `removePallyConEventListener()` functions are now available.
+    - You can register and remove `PallyConEventListener`.
+    - The old `setPallyConEventListener()` function is deprecated.
+
+- **New setCmcdConfigurationFactory() function:**
+    - Configure Common Media Client Data (CMCD) for your CDN real-time logs.
+
+- **Updated `PallyConCallback` interface:**
+    - The `executeKeyRequest` function parameter has been changed from `url` to `contentData`.
+
 # Version 4.2.0
 
->- PallyConSDK has been updated to version 4.2.0.
-   >  - Added stop() function.
-   >    - From now on, downloading content can be interrupted in the middle of the download.
-   >    - Content that has been stopped can be resumed when downloading again.
-   >  - Parameters of PallyConEventListener event listeners have been changed.
-   >    - contentUrl -> ContentData(contentId, url, ..., drmConfig)
-   >  - localPath of ContentData class has been deleted and setDownloadDirectory() static function has been added.
-   >    - You can set the download directory with the same function as localPath of ContentData.
-   >    - You can no longer set a separate directory for each content (the old code also behaved with the same directory).
+- **New stop() function added:**
+  - Content downloads can now be interrupted.
+  - Interrupted downloads can be resumed later.
+
+- **Changes to PallyConEventListener event listeners:**
+  - The `contentUrl` parameter has been replaced with `ContentData(contentId, url, ..., drmConfig)`.
+
+- **ContentData class modifications:**
+  - The `localPath` parameter has been removed.
+  - Added `setDownloadDirectory()` static function to set the download directory.
+  - Separate directories for each content are no longer supported (this matches the behavior of the old code).
 
 # Version 4.1.0
 

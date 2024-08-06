@@ -12,9 +12,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.util.Util
+import androidx.media3.exoplayer.upstream.CmcdConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.common.collect.ImmutableMap
 import com.pallycon.pallyconsample.databinding.ActivityMainBinding
 import com.pallycon.pallyconsample.dialog.TrackSelectDialog
 import com.pallycon.widevine.exception.PallyConException
@@ -23,11 +25,13 @@ import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
 import com.pallycon.widevine.model.PallyConDrmInformation
 import com.pallycon.widevine.model.PallyConEventListener
+import com.pallycon.widevine.sdk.PallyConWvSDK
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.UUID
 
 
 class MainActivity : AppCompatActivity() {
@@ -170,11 +174,11 @@ class MainActivity : AppCompatActivity() {
 
     private val pallyConCallback: PallyConCallback = object : PallyConCallback {
         override fun executeKeyRequest(
-            url: String,
+            contentData: com.pallycon.widevine.model.ContentData,
             keyData: ByteArray,
-            requestData: Map<String, String>,
+            requestData: Map<String, String>
         ): ByteArray {
-            val urlObject = URL(url)
+            val urlObject = URL(contentData.drmConfig!!.drmLicenseUrl)
 
             val conn = urlObject.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
@@ -211,7 +215,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initialize() {
-        ObjectSingleton.getInstance().createContents(this, pallyConEventListener, pallyConCallback)
+        ObjectSingleton.getInstance().createContents(this)
+        PallyConWvSDK.addPallyConEventListener(pallyConEventListener)
+
+        val cmcdFactory = CmcdConfiguration.Factory { playerId ->
+            val sessionId = UUID.randomUUID().toString()
+            val contentId = UUID.randomUUID().toString()
+
+            val cmcdRequestConfig = object : CmcdConfiguration.RequestConfig {
+                override fun isKeyAllowed(key: String): Boolean {
+                    return true
+                }
+
+                override fun getCustomData(): ImmutableMap<String, String> {
+                    return ImmutableMap.of(
+                        CmcdConfiguration.KEY_CMCD_OBJECT, "test=abcd"
+                    )
+                }
+
+                override fun getRequestedMaximumThroughputKbps(throughputKbps: Int): Int {
+                    return 5 * throughputKbps
+                }
+            }
+
+            return@Factory CmcdConfiguration(sessionId, contentId, cmcdRequestConfig)
+        }
+        PallyConWvSDK.setCmcdConfigurationFactory(cmcdFactory)
 
         adapter = RecyclerViewAdapter() { contentData, selectType ->
             when (selectType) {
@@ -251,11 +280,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        for (i in 0 until ObjectSingleton.getInstance().contents.size) {
-            ObjectSingleton.getInstance().contents[i].wvSDK.setPallyConEventListener(
-                pallyConEventListener
-            )
-        }
+        PallyConWvSDK.setPallyConCallback(pallyConCallback)
     }
 
     fun prepare() {
@@ -391,80 +416,74 @@ class MainActivity : AppCompatActivity() {
             )
         ) { _, i ->
             val wvSDK = contentData.wvSDK
-            when (i) {
-                0 -> wvSDK.pauseAll()
-                1 -> wvSDK.resumeAll()
-                2 -> {
-                    scope.launch {
-                        wvSDK.downloadLicense(null, onSuccess = {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "success download license",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }, onFailed = { e ->
-                            Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT)
-                                .show()
-                            print(e.msg)
+            try {
+                val wvSDK = contentData.wvSDK
+                when (i) {
+                    0 -> wvSDK.pauseAll()
+                    1 -> wvSDK.resumeAll()
+                    2 -> {
+                        scope.launch {
+                            wvSDK.downloadLicense(null, onSuccess = {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "success download license",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }, onFailed = { e ->
+                                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT)
+                                    .show()
+                                print(e.msg)
+                            })
+                        }
+                    }
+                    3 -> wvSDK.renewLicense()
+                    4 -> wvSDK.removeLicense()
+                    5 -> {
+                        wvSDK.removeAll()
+                        prepare()
+                    }
+                    6 -> {
+                        val info = wvSDK.getDrmInformation()
+                        val alertBuilder = AlertDialog.Builder(this)
+                        alertBuilder.setTitle("drm license info")
+                            .setMessage(
+                                "licenseDuration : ${info.licenseDuration} \n" +
+                                        "playbackDuration : ${info.playbackDuration}"
+                            )
+                        alertBuilder.setNegativeButton("Cancel", null)
+                        alertBuilder.show()
+                    }
+                    7 -> {
+                        val info = wvSDK.getDownloadFileInformation()
+                        val alertBuilder = AlertDialog.Builder(this)
+                        alertBuilder.setTitle("drm license info")
+                            .setMessage(
+                                "downloaded size : ${info.downloadedFileSize} \n"
+                            )
+                        alertBuilder.setNegativeButton("Cancel", null)
+                        alertBuilder.show()
+                    }
+                    8 -> {
+                        var keySetId = wvSDK.getKeySetId()
+                        val alertBuilder = AlertDialog.Builder(this)
+                        alertBuilder.setTitle("KetSetId")
+                            .setMessage(
+                                "KeySetId : ${keySetId}"
+                            )
+                        alertBuilder.setNegativeButton("Cancel", null)
+                        alertBuilder.show()
+                    }
+                    9 -> {
+                        wvSDK.reProvisionRequest({}, { e ->
+                            print(e.message())
                         })
                     }
                 }
-
-                3 -> wvSDK.renewLicense()
-                4 -> wvSDK.removeLicense()
-                5 -> {
-                    wvSDK.removeAll()
-                    prepare()
-                }
-
-                6 -> {
-                    var info = PallyConDrmInformation(0, 0)
-                    try {
-                        info = wvSDK.getDrmInformation()
-                    } catch (e: PallyConException.DrmException) {
-                        Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-
-                    val alertBuilder = AlertDialog.Builder(this)
-                    alertBuilder.setTitle("drm license info")
-                        .setMessage(
-                            "licenseDuration : ${info.licenseDuration} \n" +
-                                    "playbackDuration : ${info.playbackDuration}"
-                        )
-                    alertBuilder.setNegativeButton("Cancel", null)
-                    alertBuilder.show()
-                }
-
-                7 -> {
-                    val info = wvSDK.getDownloadFileInformation()
-                    val alertBuilder = AlertDialog.Builder(this)
-                    alertBuilder.setTitle("drm license info")
-                        .setMessage(
-                            "downloaded size : ${info.downloadedFileSize} \n"
-                        )
-                    alertBuilder.setNegativeButton("Cancel", null)
-                    alertBuilder.show()
-                }
-
-                8 -> {
-                    var keySetId = wvSDK.getKeySetId()
-                    val alertBuilder = AlertDialog.Builder(this)
-                    alertBuilder.setTitle("KetSetId")
-                        .setMessage(
-                            "KeySetId : ${keySetId}"
-                        )
-                    alertBuilder.setNegativeButton("Cancel", null)
-                    alertBuilder.show()
-                }
-
-                9 -> {
-                    wvSDK.reProvisionRequest({}, { e ->
-                        print(e.message())
-                    })
-                }
+            } catch (e: PallyConException.DrmException) {
+                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
+            } catch (e: PallyConLicenseServerException) {
+                Toast.makeText(this@MainActivity, "${e.message()}", Toast.LENGTH_SHORT).show()
             }
-
         }
         builder.setNegativeButton("Cancel", null)
         val dialog: Dialog = builder.create()

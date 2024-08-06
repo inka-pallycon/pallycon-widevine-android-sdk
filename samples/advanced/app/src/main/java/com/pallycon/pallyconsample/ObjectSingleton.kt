@@ -3,10 +3,9 @@ package com.pallycon.pallyconsample
 import android.content.Context
 import androidx.media3.exoplayer.offline.DownloadManager
 import androidx.media3.exoplayer.offline.DownloadNotificationHelper
+import androidx.media3.exoplayer.upstream.CmcdConfiguration
 import com.pallycon.widevine.model.DownloadState
-import com.pallycon.widevine.model.PallyConCallback
 import com.pallycon.widevine.model.PallyConDrmConfigration
-import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.sdk.PallyConWvSDK
 import java.io.File
 
@@ -14,9 +13,6 @@ class ObjectSingleton {
     val contents = mutableListOf<ContentData>()
     val downloadChannel = "download_channel"
     var context: Context? = null
-
-//    private val analyticsConfig = AnalyticsConfig("e18f4a0f-e96b-4051-9468-730ac683a603")
-//    private val analyticsConfig = AnalyticsConfig("302d9067-3462-4253-a867-b92e6b2ed237")
 
     companion object {
         private var instance: ObjectSingleton? = null
@@ -39,15 +35,18 @@ class ObjectSingleton {
         contents[index].status = status
     }
 
-    fun createContents(context: Context, pallyConEventListener: PallyConEventListener?, pallyConCallback: PallyConCallback?) {
+    fun createContents(context: Context) {
         this.context = context
 
         val fi = context.getExternalFilesDir(null) ?: context.filesDir
         val localPath = File(fi, "downloads").toString()
         PallyConWvSDK.setDownloadDirectory(context, localPath)
+        PallyConWvSDK.setDownloadService(DemoDownloadService::class.java)
+        PallyConWvSDK.setCmcdConfigurationFactory(CmcdConfiguration.Factory.DEFAULT)
+
         val config = PallyConDrmConfigration(
             "DEMO",
-            "eyJrZXlfcm90YXRpb24iOmZhbHNlLCJyZXNwb25zZV9mb3JtYXQiOiJvcmlnaW5hbCIsInVzZXJfaWQiOiJ0ZXN0LXVzZXIiLCJkcm1fdHlwZSI6IndpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJoYXNoIjoiUGlSYkF0OE1XcDlLYTYxK0pHMzEwY0RUWkx4cFd6UGdXdmZyczRwNFFEaz0iLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkpzY3Z1QTlzeGd1YkxzZCthanVcL2JvbVFaUGJxSSt4YWVZZlFvY2NrdnVFZkFhcWRXNWhYZ0pOZ2NTUzNmUzdvOE5zandzempNdXZ0KzBRekxrWlZWTm14MGtlZk9lMndDczJUSVRnZFU0QnZOOWFiaGQwclFrTUlybW9JZW9KSHFJZUhjUnZWZjZUMTRSbVRBREVwQ1k3UEhmUGZcL1ZGWVwvVmJYdXhYXC9XVHRWYXM0T1VwQ0RkNW0xc3BUWG04RFwvTUhGcGlieWZacERMRnBHeFArNkR4OThKSXhtTmFwWmRaRmlTTXB3aVpZRTIiLCJ0aW1lc3RhbXAiOiIyMDI0LTA3LTAyVDA2OjMxOjMwWiJ9"
+            "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ=="
         )
         val data = com.pallycon.widevine.model.ContentData(
             "demo-bbb-simple",
@@ -59,9 +58,6 @@ class ObjectSingleton {
             data
         )
 
-        wvSDK.setPallyConEventListener(pallyConEventListener)
-//        wvSDK.setPallyConCallback(pallyConCallback)
-        wvSDK.setDownloadService(DemoDownloadService::class.java)
         val state = wvSDK.getDownloadState()
         contents.add(
             ContentData(

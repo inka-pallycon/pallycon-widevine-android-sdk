@@ -160,11 +160,11 @@ class MainActivity : AppCompatActivity() {
 
     private val pallyConCallback: PallyConCallback = object : PallyConCallback {
         override fun executeKeyRequest(
-            url: String,
+            contentData: com.pallycon.widevine.model.ContentData,
             keyData: ByteArray,
-            requestData: Map<String, String>,
+            requestData: Map<String, String>
         ): ByteArray {
-            val urlObject = URL(url)
+            val urlObject = URL(contentData.drmConfig!!.drmLicenseUrl!!)
 
             val conn = urlObject.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
@@ -227,6 +227,7 @@ class MainActivity : AppCompatActivity() {
         val localPath = File(fi, "downloads").toString()
 
         PallyConWvSDK.setDownloadDirectory(this, localPath)
+        PallyConWvSDK.addPallyConEventListener(pallyConEventListener)
         val config = PallyConDrmConfigration(
             "DEMO",
             "eyJkcm1fdHlwZSI6IldpZGV2aW5lIiwic2l0ZV9pZCI6IkRFTU8iLCJ1c2VyX2lkIjoidGVzdFVzZXIiLCJjaWQiOiJkZW1vLWJiYi1zaW1wbGUiLCJwb2xpY3kiOiI5V3FJV2tkaHB4VkdLOFBTSVljbkp1dUNXTmlOK240S1ZqaTNpcEhIcDlFcTdITk9uYlh6QS9pdTdSa0Vwbk85c0YrSjR6R000ZkdCMzVnTGVORGNHYWdPY1Q4Ykh5c3k0ZHhSY2hYV2tUcDVLdXFlT0ljVFFzM2E3VXBnVVdTUCIsInJlc3BvbnNlX2Zvcm1hdCI6Im9yaWdpbmFsIiwia2V5X3JvdGF0aW9uIjpmYWxzZSwidGltZXN0YW1wIjoiMjAyMi0wOS0xOVQwNzo0Mjo0MFoiLCJoYXNoIjoiNDBDb1RuNEpFTnpZUHZrT1lTMHkvK2VIN1dHK0ZidUIvcThtR3VoaHVNRT0ifQ=="
@@ -240,9 +241,6 @@ class MainActivity : AppCompatActivity() {
         val wvSDK = PallyConWvSDK.createPallyConWvSDK(
             this,
             data)
-
-        wvSDK.setPallyConEventListener(pallyConEventListener)
-//        wvSDK.setPallyConCallback(pallyConCallback)
 
         val state = wvSDK.getDownloadState()
         contents.add(
@@ -315,9 +313,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        for (i in 0 until contents.size) {
-            contents[i].wvSDK.setPallyConEventListener(pallyConEventListener)
-        }
     }
 
     fun prepare() {

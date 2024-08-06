@@ -79,7 +79,7 @@ public class PallyConWvSDKManager {
         wvSDK = PallyConWvSDK.createPallyConWvSDK(
                 this.context,
                 contentData);
-        wvSDK.setPallyConEventListener(drmListener);
+        PallyConWvSDK.addPallyConEventListener(drmListener);
     }
 
     public void downloadLicense(Callable<Void> onSuccess) {

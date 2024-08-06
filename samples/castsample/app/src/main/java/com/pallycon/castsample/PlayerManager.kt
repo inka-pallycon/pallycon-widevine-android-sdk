@@ -8,6 +8,7 @@ import androidx.media3.cast.CastPlayer
 import androidx.media3.cast.SessionAvailabilityListener
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.Player.Listener
 import androidx.media3.common.Player.STATE_ENDED
@@ -256,6 +257,10 @@ internal class PlayerManager(
         castPlayer?.release()
         playerView.player = null
         localPlayer?.release()
+    }
+
+    override fun onPlayerError(error: PlaybackException) {
+        super.onPlayerError(error)
     }
 
     // Player.Listener implementation.

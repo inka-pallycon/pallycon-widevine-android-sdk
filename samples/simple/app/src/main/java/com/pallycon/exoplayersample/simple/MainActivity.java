@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaSource mediaSource;
     private String userAgent;
 
-    private PallyConEventListener drmListener = new PallyConEventListener(
-
-    ) {
+    private PallyConEventListener drmListener = new PallyConEventListener() {
         @Override
         public void onFailed(@NonNull ContentData contentData, @Nullable PallyConLicenseServerException e) {
             String message = String.format("%d, %s", e.errorCode(), e.body());
@@ -63,34 +61,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onPaused(@NonNull ContentData contentData) {
-
-        }
+        public void onPaused(@NonNull ContentData contentData) {}
 
         @Override
-        public void onRemoved(@NonNull ContentData contentData) {
-
-        }
+        public void onRemoved(@NonNull ContentData contentData) {}
 
         @Override
-        public void onRestarting(@NonNull ContentData contentData) {
-
-        }
+        public void onRestarting(@NonNull ContentData contentData) {}
 
         @Override
-        public void onStopped(@NonNull ContentData contentData) {
-
-        }
+        public void onStopped(@NonNull ContentData contentData) {}
 
         @Override
-        public void onProgress(@NonNull ContentData contentData, float percent, long downloadedBytes) {
-
-        }
+        public void onProgress(@NonNull ContentData contentData, float percent, long downloadedBytes) {}
 
         @Override
-        public void onCompleted(@NonNull ContentData contentData) {
-
-        }
+        public void onCompleted(@NonNull ContentData contentData) {}
     };
 
     // TODO : must implement ExoPlayer.EventListener
@@ -158,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: 2. initialize PallyconWVM SDK
         WVMAgent = PallyConWvSDK.createPallyConWvSDK(this, content);
-        WVMAgent.setPallyConEventListener(drmListener);
+        PallyConWvSDK.addPallyConEventListener(drmListener);
 
         DrmSessionManager manager = WVMAgent.getDrmSessionManager();
 

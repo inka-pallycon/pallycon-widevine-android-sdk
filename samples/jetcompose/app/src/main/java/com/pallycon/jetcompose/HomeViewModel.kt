@@ -13,6 +13,7 @@ import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConDrmInformation
 import com.pallycon.widevine.model.PallyConEventListener
+import com.pallycon.widevine.sdk.PallyConWvSDK
 import com.pallycon.widevine.track.PallyConDownloaderTracks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -135,7 +136,10 @@ class HomeViewModel : ViewModel() {
 
     fun initialize(context: Context) {
         this.context = context
-        ObjectSingleton.getInstance().createContents(context, pallyConEventListener, null)
+        if (ObjectSingleton.getInstance().contents.isEmpty()) {
+            PallyConWvSDK.addPallyConEventListener(pallyConEventListener)
+            ObjectSingleton.getInstance().createContents(context)
+        }
         modifyContentDataList(ObjectSingleton.getInstance().getContentDatas())
     }
 

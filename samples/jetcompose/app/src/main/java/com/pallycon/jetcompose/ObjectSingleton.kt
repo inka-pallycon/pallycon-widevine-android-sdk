@@ -35,9 +35,8 @@ import java.io.File
         }
     }
 
-    fun createContents(context: Context, pallyConEventListener: PallyConEventListener?, pallyConCallback: PallyConCallback?) {
-        if (contents.size != 0) {
-            contents[0].wvSDK.setPallyConEventListener(pallyConEventListener)
+    fun createContents(context: Context) {
+        if (contents.size > 0) {
             return
         }
 
@@ -59,8 +58,6 @@ import java.io.File
             context,
             data
         )
-        wvSDK.setPallyConEventListener(pallyConEventListener)
-        wvSDK.setDownloadService(DemoDownloadService::class.java)
 
         val state = wvSDK.getDownloadState()
         contents.add(
