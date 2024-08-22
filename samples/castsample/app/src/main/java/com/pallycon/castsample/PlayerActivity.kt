@@ -60,7 +60,7 @@ class PlayerActivity : CastStateListener, AppCompatActivity() {
         return true
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         return super.dispatchKeyEvent(event) || playerManager?.dispatchKeyEvent(event) == true
     }
 

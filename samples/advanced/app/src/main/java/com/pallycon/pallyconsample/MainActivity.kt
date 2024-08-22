@@ -13,17 +13,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.upstream.CmcdConfiguration
+import androidx.media3.exoplayer.upstream.CmcdConfiguration.HeaderKey
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableListMultimap
 import com.pallycon.pallyconsample.databinding.ActivityMainBinding
 import com.pallycon.pallyconsample.dialog.TrackSelectDialog
 import com.pallycon.widevine.exception.PallyConException
 import com.pallycon.widevine.exception.PallyConLicenseServerException
 import com.pallycon.widevine.model.DownloadState
 import com.pallycon.widevine.model.PallyConCallback
-import com.pallycon.widevine.model.PallyConDrmInformation
 import com.pallycon.widevine.model.PallyConEventListener
 import com.pallycon.widevine.sdk.PallyConWvSDK
 import kotlinx.coroutines.CoroutineScope
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         override fun executeKeyRequest(
             contentData: com.pallycon.widevine.model.ContentData,
             keyData: ByteArray,
-            requestData: Map<String, String>
+            requestData: Map<String, String>,
         ): ByteArray {
             val urlObject = URL(contentData.drmConfig!!.drmLicenseUrl)
 
@@ -212,6 +212,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         contents.contents.clear()
+        PallyConWvSDK.removePallyConEventListener(pallyConEventListener)
     }
 
     private fun initialize() {
@@ -227,9 +228,9 @@ class MainActivity : AppCompatActivity() {
                     return true
                 }
 
-                override fun getCustomData(): ImmutableMap<String, String> {
-                    return ImmutableMap.of(
-                        CmcdConfiguration.KEY_CMCD_OBJECT, "test=abcd"
+                override fun getCustomData(): ImmutableListMultimap<String, String> {
+                    return ImmutableListMultimap.of(
+                        CmcdConfiguration.KEY_CMCD_OBJECT, "player-type=exoplayer"
                     )
                 }
 

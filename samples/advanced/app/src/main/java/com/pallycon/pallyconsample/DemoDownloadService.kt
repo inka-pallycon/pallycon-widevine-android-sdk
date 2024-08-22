@@ -36,14 +36,14 @@ class DemoDownloadService constructor(
         val manager = ObjectSingleton.getInstance().getDownloadManager()
         val downloadNotificationHelper = ObjectSingleton.getInstance().getDownloadNotificationHelper()
 
-        manager?.addListener(
+        manager.addListener(
             TerminalStateNotificationHelper(
                 this,
                 downloadNotificationHelper,
                 FOREGROUND_NOTIFICATION_ID + 1
             )
         )
-        return manager!!
+        return manager
     }
 
     override fun getScheduler(): Scheduler? {

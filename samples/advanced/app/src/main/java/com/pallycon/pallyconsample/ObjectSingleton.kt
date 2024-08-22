@@ -132,11 +132,7 @@ class ObjectSingleton {
         return DownloadNotificationHelper(this.context!!, downloadChannel)
     }
 
-    fun getDownloadManager(): DownloadManager? {
-        return if (contents.size > 0) {
-            return contents[0].wvSDK?.getDownloadManager(this.context!!)
-        } else {
-            null
-        }
+    fun getDownloadManager(): DownloadManager {
+        return PallyConWvSDK.getDownloadManager(this.context!!)
     }
 }

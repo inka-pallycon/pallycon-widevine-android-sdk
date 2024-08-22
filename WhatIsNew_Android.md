@@ -2,7 +2,7 @@
 
 - **Support for license policy 2.0:**
     - The SDK now processes license data according to policy 2.0 specifications.
-    - `setPallyConCallback()` and `setDownloadService()` have been changed to static functions.
+    - `setPallyConCallback()`, `setDownloadService()` and `getDownloadManager()` have been changed to static functions.
     - Use `PallyConWvSDK.setPallyConCallback()` from now on.
     - The old `setPallyConCallback()` and `setDownloadService()` functions are deprecated.
 
@@ -16,6 +16,15 @@
 
 - **Updated `PallyConCallback` interface:**
     - The `executeKeyRequest` function parameter has been changed from `url` to `contentData`.
+
+- **Updated Libraries:**
+    - core: Updated to `1.13.1`
+    - appCompat: Updated to `1.7.0`
+    - material: Updated to `1.12.0`
+    - coroutines: Updated to `1.8.1`
+    - media3: Updated to `1.3.1`
+    - gson: Updated to `2.11.0`
+    - security: Updated to `1.1.0-alpha06`
 
 # Version 4.2.0
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 buildscript {
     ext.minSdkVersion = 21
-    ext.targetSdkVersion = 33
+    ext.targetSdkVersion = 34
     ext.dokkaVersion = '1.9.20'
-    ext.gradleVersion = '8.2.1'
+    ext.gradleVersion = '8.5.2'
     ext.kotlinVersion = '1.9.23'
     ext.nexusVersion = '1.2.0'
 
