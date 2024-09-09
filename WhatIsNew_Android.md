@@ -1,3 +1,9 @@
+# Version 4.3.1
+
+- **Updated Libraries:**
+  - media3: Updated to `1.4.1`
+
+
 # Version 4.3.0
 
 - **Support for license policy 2.0:**
