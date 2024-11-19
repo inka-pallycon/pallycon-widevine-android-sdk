@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.upstream.CmcdConfiguration
-import androidx.media3.exoplayer.upstream.CmcdConfiguration.HeaderKey
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -182,6 +181,9 @@ class MainActivity : AppCompatActivity() {
 
             val conn = urlObject.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
+
+            // User-Agent
+//            conn.setRequestProperty("User-Agent", "Your Custom User Agent String")
 
             for (data in requestData) {
                 conn.addRequestProperty(data.key, data.value)

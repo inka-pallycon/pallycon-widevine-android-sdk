@@ -2,20 +2,14 @@ package com.pallycon.pallyconsample
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.media3.common.C
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.common.util.Clock
-import androidx.media3.common.util.SystemClock
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.analytics.AnalyticsListener
-import androidx.media3.exoplayer.analytics.DefaultAnalyticsCollector
-import androidx.media3.exoplayer.source.LoadEventInfo
-import androidx.media3.exoplayer.source.MediaLoadData
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.ui.PlayerView
 import com.pallycon.pallyconsample.databinding.ActivityPlayerBinding
@@ -64,16 +58,19 @@ class PlayerActivity : AppCompatActivity() {
                 }
             }
 
-            val drmInfo = wvSDK?.getDrmInformation()
-            drmInfo?.let {
-                if ((it.licenseDuration <= 0 || it.playbackDuration <= 0) &&
-                    wvSDK?.getDownloadState() == DownloadState.COMPLETED) {
-                    Toast.makeText(applicationContext, "Expired license", Toast.LENGTH_LONG)
-                        .show()
-                }
-                // mediaItem = wvSDK?.getMediaItem()
-                wvSDK?.getMediaSource()?.let { media ->
-                    mediaSource = media
+            // mediaItem = wvSDK?.getMediaItem()
+            wvSDK?.getMediaSource()?.let { media ->
+                mediaSource = media
+                val drmConfiguration = media.mediaItem.localConfiguration?.drmConfiguration
+                if (drmConfiguration != null &&
+                    drmConfiguration.scheme != C.CLEARKEY_UUID) {
+                    wvSDK?.getDrmInformation()?.let {
+                        if ((it.licenseDuration <= 0 || it.playbackDuration <= 0) &&
+                            wvSDK?.getDownloadState() == DownloadState.COMPLETED) {
+                            Toast.makeText(applicationContext, "Expired license", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
                 }
             }
         } catch (e: PallyConException.DrmException) {
@@ -92,7 +89,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // using mediaItem
         /*
-         ExoPlayer.Builder(this).setMediaSourceFactory(
+         ExoPlayer.Builer(this).setMediaSourceFactory(
                 DefaultMediaSourceFactory(this)
                 setDataSourceFactory(wvSDK!!.getDataSourceFactory())).build()
         */

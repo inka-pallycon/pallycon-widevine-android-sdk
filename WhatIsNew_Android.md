@@ -1,8 +1,18 @@
+# Version 4.3.2
+
+- **Added `ClearKeyLicenseException` exception:**
+  - Added an error that occurs when attempting to download a license for clearkey or non-DRM content.
+
+- **Updated `download()` function:**
+  - downloads of Clearkey or NonDRM content will proceed even if you don't have a license to download it.
+
+- **Updated `getMediaSource()` and `getMediaItem` function:**
+  - When calling the function while downloading, get the media of the content being downloaded.
+
 # Version 4.3.1
 
 - **Updated Libraries:**
-  - media3: Updated to `1.4.1`
-
+    - media3: Updated to `1.4.1`
 
 # Version 4.3.0
 
