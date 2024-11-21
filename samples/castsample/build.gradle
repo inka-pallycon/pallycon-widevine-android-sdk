@@ -25,6 +25,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
@@ -39,12 +42,15 @@ allprojects {
         maven {
             url = uri("https://maven.pkg.github.com/inka-pallycon/pallycon-widevine-android-sdk")
             credentials {
-                username = "your github userId"
-                password = "your github token"
+username = "GitHub ID"
+password = "GitHub Personal Access Token"
             }
         }
         google()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 }
 

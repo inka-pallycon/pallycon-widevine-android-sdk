@@ -42,7 +42,10 @@ dependencies {
 //    implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    implementation fileTree(include: ['*.aar'], dir: 'libs')
 
-//    implementation 'com.pallycon:widevine:4.3.2'
+    
+//    
+
+//    implementation 'com.pallycon:widevine:4.3.1'
 
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'com.google.android.material:material:1.12.0'
