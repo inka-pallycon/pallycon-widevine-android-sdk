@@ -35,8 +35,7 @@ class PlayerActivity : CastStateListener, AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val castExecutor = Executors.newSingleThreadExecutor()
-        CastContext.getSharedInstance(this, castExecutor).addOnCompleteListener {
+        CastContext.getSharedInstance(this, MoreExecutors.directExecutor()).addOnCompleteListener {
             castContext = it.result
             castContext?.addCastStateListener(this)
             buildSample()
